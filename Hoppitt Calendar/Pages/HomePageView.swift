@@ -10,11 +10,7 @@ import SwiftUI
 struct HomePageView: View {
     var body: some View {
         VStack {
-            Image("Calendar")
-                .resizable()
-                .frame(width: 100, height: 100)
-                .foregroundStyle(CONSTANTS.COLOURS.GREY)
-            Text("Hello, world!")
+            Text("Calendar")
                 .font(.title)
                 .bold()
             CreateEventButton()
