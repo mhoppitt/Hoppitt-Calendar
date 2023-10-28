@@ -11,8 +11,8 @@ struct CreateEventButton: View {
     var body: some View {
         Button(action: {
             Task {
-                let event: CalendarEvent = CalendarEvent(id: "1", title: "test event", date: "123")
                 let eventsTable = CalendarEventsTable()
+                let event: CalendarEvent = CalendarEvent(id: eventsTable.generateID(), title: "test event", date: "123")
                 do {
                     try await eventsTable.addEvent(event: event)
                 } catch let error {

@@ -16,6 +16,10 @@ public class CalendarEventsTable {
         AWSServiceManager.default().defaultServiceConfiguration = configuration
     }
     
+    func generateID() -> String {
+        return UUID().uuidString
+    }
+    
     func addEvent(event: CalendarEvent) async throws {
         let dynamoDB = AWSDynamoDB.default()
         guard let id = AWSDynamoDBAttributeValue() else {
