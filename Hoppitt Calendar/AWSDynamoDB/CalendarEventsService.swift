@@ -50,4 +50,27 @@ public class CalendarEventsTable {
 
         try await dynamoDB.putItem(input)
     }
+    
+    func getEvents() async throws -> [CalendarEvent] {
+        let dynamoDB = AWSDynamoDB.default()
+        
+        guard let query = AWSDynamoDBScanInput() else {
+            return []
+        }
+        query.tableName = tableName
+        
+        let response = try await dynamoDB.scan(query)
+        
+        var eventList: [CalendarEvent] = []
+        
+        for record in response.items.unsafelyUnwrapped {
+            let id: String = record["id"]!.s.unsafelyUnwrapped
+            let title: String = record["title"]!.s.unsafelyUnwrapped
+            let date: String = record["date"]!.s.unsafelyUnwrapped
+            
+            let event = CalendarEvent(id: id, title: title, date: date)
+            eventList.append(event)
+        }
+        return eventList
+    }
 }

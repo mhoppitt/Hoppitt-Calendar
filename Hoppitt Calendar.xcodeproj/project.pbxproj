@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		385DC8FE2AED2E9F001F3A11 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DC8FD2AED2E9F001F3A11 /* CalendarView.swift */; };
 		3885D5F32AEB4FC500616336 /* Hoppitt_CalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3885D5F22AEB4FC500616336 /* Hoppitt_CalendarApp.swift */; };
 		3885D5F72AEB4FCC00616336 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3885D5F62AEB4FCC00616336 /* Assets.xcassets */; };
 		3885D5FA2AEB4FCC00616336 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3885D5F92AEB4FCC00616336 /* Preview Assets.xcassets */; };
@@ -29,7 +30,7 @@
 		38ED26B52AECBB970026CA27 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ED26B42AECBB970026CA27 /* ToastView.swift */; };
 		38ED26B72AECBBB40026CA27 /* ToastModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ED26B62AECBBB40026CA27 /* ToastModifier.swift */; };
 		38ED26B92AECBBE50026CA27 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ED26B82AECBBE50026CA27 /* View.swift */; };
-		38ED26BD2AECC86D0026CA27 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ED26BC2AECC86D0026CA27 /* HomePageView.swift */; };
+		38ED26BD2AECC86D0026CA27 /* CalendarPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ED26BC2AECC86D0026CA27 /* CalendarPageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		385DC8FD2AED2E9F001F3A11 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		3885D5EF2AEB4FC500616336 /* Hoppitt Calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hoppitt Calendar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3885D5F22AEB4FC500616336 /* Hoppitt_CalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hoppitt_CalendarApp.swift; sourceTree = "<group>"; };
 		3885D5F62AEB4FCC00616336 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -73,7 +75,7 @@
 		38ED26B42AECBB970026CA27 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		38ED26B62AECBBB40026CA27 /* ToastModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastModifier.swift; sourceTree = "<group>"; };
 		38ED26B82AECBBE50026CA27 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
-		38ED26BC2AECC86D0026CA27 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
+		38ED26BC2AECC86D0026CA27 /* CalendarPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,7 +169,7 @@
 		3885D6222AEB715600616336 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
-				38ED26BC2AECC86D0026CA27 /* HomePageView.swift */,
+				38ED26BC2AECC86D0026CA27 /* CalendarPageView.swift */,
 				38ED26A82AECAA380026CA27 /* KeyDatesPageView.swift */,
 				38ED26AA2AECAA810026CA27 /* ToDoPageView.swift */,
 			);
@@ -199,6 +201,7 @@
 			children = (
 				38ED26AF2AECB9D10026CA27 /* Toast */,
 				3885D61C2AEB5CA400616336 /* CreateEventButton.swift */,
+				385DC8FD2AED2E9F001F3A11 /* CalendarView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -363,9 +366,10 @@
 			files = (
 				38ED26B72AECBBB40026CA27 /* ToastModifier.swift in Sources */,
 				3885D61D2AEB5CA400616336 /* CreateEventButton.swift in Sources */,
+				385DC8FE2AED2E9F001F3A11 /* CalendarView.swift in Sources */,
 				38ED26B92AECBBE50026CA27 /* View.swift in Sources */,
 				38ED26AB2AECAA810026CA27 /* ToDoPageView.swift in Sources */,
-				38ED26BD2AECC86D0026CA27 /* HomePageView.swift in Sources */,
+				38ED26BD2AECC86D0026CA27 /* CalendarPageView.swift in Sources */,
 				3885D6262AEB93F200616336 /* CalendarEventsService.swift in Sources */,
 				38ED26A92AECAA380026CA27 /* KeyDatesPageView.swift in Sources */,
 				38ED26A52AEC9BB30026CA27 /* Secrets.swift in Sources */,

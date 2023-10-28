@@ -11,7 +11,7 @@ struct AppLayout: View {
     var body: some View {
         TabView {
             Group {
-                HomePageView()
+                CalendarPageView()
                     .tabItem {
                         Label("Calendar", systemImage: "calendar")
                     }
