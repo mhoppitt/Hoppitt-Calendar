@@ -8,12 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		3885D5F32AEB4FC500616336 /* Hoppitt_CalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3885D5F22AEB4FC500616336 /* Hoppitt_CalendarApp.swift */; };
-		3885D5F52AEB4FC500616336 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3885D5F42AEB4FC500616336 /* ContentView.swift */; };
+		3885D5F52AEB4FC500616336 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3885D5F42AEB4FC500616336 /* HomePageView.swift */; };
 		3885D5F72AEB4FCC00616336 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3885D5F62AEB4FCC00616336 /* Assets.xcassets */; };
 		3885D5FA2AEB4FCC00616336 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3885D5F92AEB4FCC00616336 /* Preview Assets.xcassets */; };
 		3885D6042AEB4FCC00616336 /* Hoppitt_CalendarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3885D6032AEB4FCC00616336 /* Hoppitt_CalendarTests.swift */; };
 		3885D60E2AEB4FCC00616336 /* Hoppitt_CalendarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3885D60D2AEB4FCC00616336 /* Hoppitt_CalendarUITests.swift */; };
 		3885D6102AEB4FCC00616336 /* Hoppitt_CalendarUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3885D60F2AEB4FCC00616336 /* Hoppitt_CalendarUITestsLaunchTests.swift */; };
+		3885D61D2AEB5CA400616336 /* CreateEventButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3885D61C2AEB5CA400616336 /* CreateEventButton.swift */; };
+		3885D6202AEB6A8800616336 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3885D61F2AEB6A8800616336 /* Constants.swift */; };
+		3885D6262AEB93F200616336 /* CalendarEventsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3885D6252AEB93F200616336 /* CalendarEventsService.swift */; };
+		3885D6292AEB96C700616336 /* AWSCore in Frameworks */ = {isa = PBXBuildFile; productRef = 3885D6282AEB96C700616336 /* AWSCore */; };
+		3885D62B2AEB96C700616336 /* AWSDynamoDB in Frameworks */ = {isa = PBXBuildFile; productRef = 3885D62A2AEB96C700616336 /* AWSDynamoDB */; };
+		3885D62D2AEB9D3C00616336 /* CalendarEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3885D62C2AEB9D3C00616336 /* CalendarEvent.swift */; };
+		38ED269E2AEBC67D0026CA27 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ED269D2AEBC67D0026CA27 /* Secrets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +43,7 @@
 /* Begin PBXFileReference section */
 		3885D5EF2AEB4FC500616336 /* Hoppitt Calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hoppitt Calendar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3885D5F22AEB4FC500616336 /* Hoppitt_CalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hoppitt_CalendarApp.swift; sourceTree = "<group>"; };
-		3885D5F42AEB4FC500616336 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		3885D5F42AEB4FC500616336 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
 		3885D5F62AEB4FCC00616336 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3885D5F92AEB4FCC00616336 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3885D5FF2AEB4FCC00616336 /* Hoppitt CalendarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hoppitt CalendarTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,6 +51,12 @@
 		3885D6092AEB4FCC00616336 /* Hoppitt CalendarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hoppitt CalendarUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3885D60D2AEB4FCC00616336 /* Hoppitt_CalendarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hoppitt_CalendarUITests.swift; sourceTree = "<group>"; };
 		3885D60F2AEB4FCC00616336 /* Hoppitt_CalendarUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hoppitt_CalendarUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		3885D61C2AEB5CA400616336 /* CreateEventButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventButton.swift; sourceTree = "<group>"; };
+		3885D61F2AEB6A8800616336 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		3885D6212AEB6E7800616336 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		3885D6252AEB93F200616336 /* CalendarEventsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventsService.swift; sourceTree = "<group>"; };
+		3885D62C2AEB9D3C00616336 /* CalendarEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEvent.swift; sourceTree = "<group>"; };
+		38ED269D2AEBC67D0026CA27 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +64,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3885D62B2AEB96C700616336 /* AWSDynamoDB in Frameworks */,
+				3885D6292AEB96C700616336 /* AWSCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +89,7 @@
 		3885D5E62AEB4FC500616336 = {
 			isa = PBXGroup;
 			children = (
+				3885D6212AEB6E7800616336 /* README.md */,
 				3885D5F12AEB4FC500616336 /* Hoppitt Calendar */,
 				3885D6022AEB4FCC00616336 /* Hoppitt CalendarTests */,
 				3885D60C2AEB4FCC00616336 /* Hoppitt CalendarUITests */,
@@ -95,8 +111,10 @@
 			isa = PBXGroup;
 			children = (
 				3885D5F22AEB4FC500616336 /* Hoppitt_CalendarApp.swift */,
-				3885D5F42AEB4FC500616336 /* ContentView.swift */,
-				3885D5F62AEB4FCC00616336 /* Assets.xcassets */,
+				3885D62E2AEBBBAC00616336 /* Components */,
+				3885D6222AEB715600616336 /* Pages */,
+				3885D6242AEB93C400616336 /* AWSDynamoDB */,
+				3885D6232AEB716B00616336 /* Resources */,
 				3885D5F82AEB4FCC00616336 /* Preview Content */,
 			);
 			path = "Hoppitt Calendar";
@@ -127,6 +145,49 @@
 			path = "Hoppitt CalendarUITests";
 			sourceTree = "<group>";
 		};
+		3885D6222AEB715600616336 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				3885D5F42AEB4FC500616336 /* HomePageView.swift */,
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
+		3885D6232AEB716B00616336 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3885D5F62AEB4FCC00616336 /* Assets.xcassets */,
+				3885D61F2AEB6A8800616336 /* Constants.swift */,
+				38ED269D2AEBC67D0026CA27 /* Secrets.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		3885D6242AEB93C400616336 /* AWSDynamoDB */ = {
+			isa = PBXGroup;
+			children = (
+				3885D6252AEB93F200616336 /* CalendarEventsService.swift */,
+				38ED269F2AEC92750026CA27 /* Tables */,
+			);
+			path = AWSDynamoDB;
+			sourceTree = "<group>";
+		};
+		3885D62E2AEBBBAC00616336 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				3885D61C2AEB5CA400616336 /* CreateEventButton.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		38ED269F2AEC92750026CA27 /* Tables */ = {
+			isa = PBXGroup;
+			children = (
+				3885D62C2AEB9D3C00616336 /* CalendarEvent.swift */,
+			);
+			path = Tables;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,6 +204,10 @@
 			dependencies = (
 			);
 			name = "Hoppitt Calendar";
+			packageProductDependencies = (
+				3885D6282AEB96C700616336 /* AWSCore */,
+				3885D62A2AEB96C700616336 /* AWSDynamoDB */,
+			);
 			productName = "Hoppitt Calendar";
 			productReference = 3885D5EF2AEB4FC500616336 /* Hoppitt Calendar.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +280,9 @@
 				Base,
 			);
 			mainGroup = 3885D5E62AEB4FC500616336;
+			packageReferences = (
+				3885D6272AEB96C700616336 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */,
+			);
 			productRefGroup = 3885D5F02AEB4FC500616336 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -257,8 +325,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3885D5F52AEB4FC500616336 /* ContentView.swift in Sources */,
+				3885D61D2AEB5CA400616336 /* CreateEventButton.swift in Sources */,
+				3885D6262AEB93F200616336 /* CalendarEventsService.swift in Sources */,
+				38ED269E2AEBC67D0026CA27 /* Secrets.swift in Sources */,
+				3885D5F52AEB4FC500616336 /* HomePageView.swift in Sources */,
 				3885D5F32AEB4FC500616336 /* Hoppitt_CalendarApp.swift in Sources */,
+				3885D62D2AEB9D3C00616336 /* CalendarEvent.swift in Sources */,
+				3885D6202AEB6A8800616336 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,6 +661,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3885D6272AEB96C700616336 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aws-amplify/aws-sdk-ios-spm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.33.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3885D6282AEB96C700616336 /* AWSCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3885D6272AEB96C700616336 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */;
+			productName = AWSCore;
+		};
+		3885D62A2AEB96C700616336 /* AWSDynamoDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3885D6272AEB96C700616336 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */;
+			productName = AWSDynamoDB;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3885D5E72AEB4FC500616336 /* Project object */;
 }

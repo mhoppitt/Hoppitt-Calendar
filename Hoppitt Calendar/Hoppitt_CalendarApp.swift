@@ -11,7 +11,7 @@ import SwiftUI
 struct Hoppitt_CalendarApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomePageView()
         }
     }
 }
