@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  HomePageView.swift
 //  Hoppitt Calendar
 //
 //  Created by Matt Hoppitt on 27/10/2023.
@@ -13,9 +13,9 @@ struct HomePageView: View {
             Text("Calendar")
                 .font(.title)
                 .bold()
+            Spacer()
             CreateEventButton()
         }
-        .padding()
     }
 }
 

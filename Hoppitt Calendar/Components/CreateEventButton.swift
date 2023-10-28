@@ -8,20 +8,30 @@
 import SwiftUI
 
 struct CreateEventButton: View {
+    @State private var toast: Toast? = nil
+    
     var body: some View {
-        Button(action: {
-            Task {
-                let eventsTable = CalendarEventsTable()
-                let event: CalendarEvent = CalendarEvent(id: eventsTable.generateID(), title: "test event", date: "123")
-                do {
-                    try await eventsTable.addEvent(event: event)
-                } catch let error {
-                    print(error)
+        ZStack {
+            Button(action: {
+                Task {
+                    let eventsTable = CalendarEventsTable()
+                    let event: CalendarEvent = CalendarEvent(id: eventsTable.generateID(), title: "test event", date: "123")
+                    do {
+                        try await eventsTable.addEvent(event: event)
+                        toast = Toast(style: .success, message: "Event saved", width: 190)
+                    } catch let error {
+                        toast = Toast(style: .error, message: "Error", width: 190)
+                        print(error)
+                    }
                 }
+            }) {
+                Image(systemName: "plus.circle.fill")
+                    .resizable()
+                    .frame(width: 50, height: 50)
             }
-        }) {
-            Text("Create Event")
         }
+        .toastView(toast: $toast)
+        .offset(x: 160, y: 330)
     }
 }
 
