@@ -40,7 +40,7 @@ public class CalendarEventsTable {
         guard let date = AWSDynamoDBAttributeValue() else {
             return print("Error setting date")
         }
-        date.s = event.date
+        date.s = event.date.formatted()
         
         guard let who = AWSDynamoDBAttributeValue() else {
             return print("Error setting person")
@@ -72,8 +72,12 @@ public class CalendarEventsTable {
         for record in response.items.unsafelyUnwrapped {
             let id: String = record["id"]!.s.unsafelyUnwrapped
             let title: String = record["title"]!.s.unsafelyUnwrapped
-            let date: String = record["date"]!.s.unsafelyUnwrapped
+            let dateString: String = record["date"]!.s.unsafelyUnwrapped
             let who: String = record["who"]!.s.unsafelyUnwrapped
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yy"
+            let date = dateFormatter.date(from: dateString) ?? Date()
             
             let event = CalendarEvent(id: id, title: title, date: date, who: who)
             eventList.append(event)
