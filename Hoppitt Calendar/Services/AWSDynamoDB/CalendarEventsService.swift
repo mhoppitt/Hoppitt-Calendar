@@ -41,11 +41,17 @@ public class CalendarEventsTable {
             return print("Error setting date")
         }
         date.s = event.date
+        
+        guard let who = AWSDynamoDBAttributeValue() else {
+            return print("Error setting person")
+        }
+        who.s = event.who
 
         input.item = [
             "id": id,
-            "title" : title,
-            "date" : date
+            "title": title,
+            "date": date,
+            "who": who,
         ]
 
         try await dynamoDB.putItem(input)
@@ -67,8 +73,9 @@ public class CalendarEventsTable {
             let id: String = record["id"]!.s.unsafelyUnwrapped
             let title: String = record["title"]!.s.unsafelyUnwrapped
             let date: String = record["date"]!.s.unsafelyUnwrapped
+            let who: String = record["who"]!.s.unsafelyUnwrapped
             
-            let event = CalendarEvent(id: id, title: title, date: date)
+            let event = CalendarEvent(id: id, title: title, date: date, who: who)
             eventList.append(event)
         }
         return eventList

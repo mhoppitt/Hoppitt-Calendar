@@ -39,10 +39,17 @@ struct CalendarPageView: View {
                 Text("Calendar")
                     .font(.title)
                     .bold()
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 0) {
                     ForEach(dateList, id: \.hashValue) { date in
                         CalendarView(events: model.events ?? [], date: date)
                     }
+                    .overlay(
+                        HStack {
+                            Divider()
+                                .overlay(.black)
+                                .offset(x: -100)
+                        }
+                    )
                 }
             }
         }
