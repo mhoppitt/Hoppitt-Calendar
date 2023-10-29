@@ -35,7 +35,14 @@ struct CalendarView: View {
                     ForEach(events, id: \.id) { event in
                         if (Calendar.current.isDate(event.date, equalTo: date, toGranularity: .day)) {
                             HStack(spacing: 10) {
-                                Image(systemName: "\(event.who.prefix(1).lowercased()).circle.fill")
+                                if (event.who == "Matt and Benji") {
+                                    HStack(spacing: 0) {
+                                        Image(systemName: "m.circle.fill")
+                                        Image(systemName: "b.circle.fill")
+                                    }
+                                } else {
+                                    Image(systemName: "\(event.who.prefix(1).lowercased()).circle.fill")
+                                }
                                 Text(event.title)
                             }
                         }
@@ -45,9 +52,10 @@ struct CalendarView: View {
             Spacer()
         }
         .padding()
+        Divider()
     }
 }
 
 #Preview {
-    CalendarView(events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Date(), who: "Matt"), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Date(), who: "Benji")], date: Date())
+    CalendarView(events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Date(), who: "Matt"), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Date(), who: "Matt and Benji")], date: Date())
 }

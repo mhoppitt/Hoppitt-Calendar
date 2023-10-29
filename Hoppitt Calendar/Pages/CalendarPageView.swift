@@ -46,7 +46,8 @@ struct CalendarPageView: View {
                     .overlay(
                         HStack {
                             Divider()
-                                .overlay(.black)
+                                .frame(width: 1)
+                                .overlay(.gray)
                                 .offset(x: -100)
                         }
                     )
