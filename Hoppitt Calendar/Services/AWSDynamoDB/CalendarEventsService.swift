@@ -40,7 +40,11 @@ public class CalendarEventsTable {
         guard let date = AWSDynamoDBAttributeValue() else {
             return print("Error setting date")
         }
-        date.s = event.date.formatted()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss Z"
+        dateFormatter.timeZone = TimeZone(abbreviation: TimeZone.current.identifier)
+        let dateString = dateFormatter.string(from: event.date)
+        date.s = dateString
         
         guard let who = AWSDynamoDBAttributeValue() else {
             return print("Error setting person")
@@ -76,8 +80,8 @@ public class CalendarEventsTable {
             let who: String = record["who"]!.s.unsafelyUnwrapped
             
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd/MM/yyyy, hh:mm a"
-            dateFormatter.timeZone = TimeZone(abbreviation: "GMT+08:00")
+            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss Z"
+            dateFormatter.timeZone = TimeZone(abbreviation: TimeZone.current.identifier)
             let date = dateFormatter.date(from: dateString) ?? Date()
             
             let event = CalendarEvent(id: id, title: title, date: date, who: who)
