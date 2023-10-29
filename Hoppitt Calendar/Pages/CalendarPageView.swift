@@ -27,6 +27,7 @@ struct CalendarPageView: View {
     @State private var contentSize: CGSize = .zero
     @StateObject var model = EventsModel()
     @State public var refreshed: Bool = false
+    @State public var dateList: [Date] = []
     
     func refreshView() {
         return refreshed.toggle()
@@ -39,8 +40,8 @@ struct CalendarPageView: View {
                     .font(.title)
                     .bold()
                 VStack(alignment: .leading) {
-                    ForEach(model.events ?? [], id: \.id) { result in
-                        CalendarView(event: result)
+                    ForEach(dateList, id: \.hashValue) { date in
+                        CalendarView(events: model.events ?? [], date: date)
                     }
                 }
             }
@@ -50,6 +51,7 @@ struct CalendarPageView: View {
         }
         .task(id: refreshed) {
             await model.fetchEvents()
+            dateList = DateService().getCurrentWeek()
         }
         .overlay(
             GeometryReader() { proxy in
