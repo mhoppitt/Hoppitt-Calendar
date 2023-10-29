@@ -76,7 +76,8 @@ public class CalendarEventsTable {
             let who: String = record["who"]!.s.unsafelyUnwrapped
             
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd/MM/yy"
+            dateFormatter.dateFormat = "dd/MM/yyyy, hh:mm a"
+            dateFormatter.timeZone = TimeZone(abbreviation: "GMT+08:00")
             let date = dateFormatter.date(from: dateString) ?? Date()
             
             let event = CalendarEvent(id: id, title: title, date: date, who: who)
