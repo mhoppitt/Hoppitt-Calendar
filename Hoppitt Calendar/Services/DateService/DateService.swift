@@ -14,7 +14,7 @@ public class DateService {
         let today = calendar.startOfDay(for: Date())
         var week = [Date]()
         if let weekInterval = calendar.dateInterval(of: .weekOfYear, for: today) {
-            for i in 0...6 {
+            for i in 0...13 {
                 if let day = calendar.date(byAdding: .day, value: i, to: weekInterval.start) {
                     week += [day]
                 }

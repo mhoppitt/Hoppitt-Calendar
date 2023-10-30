@@ -14,7 +14,7 @@ struct CreateEventButton: View {
         Button(action: {
             Task {
                 let eventsTable = CalendarEventsTable()
-                let event: CalendarEvent = CalendarEvent(id: eventsTable.generateID(), title: "TEST EVENT", date: Date(), who: "Matt")
+                let event: CalendarEvent = CalendarEvent(id: eventsTable.generateID(), title: "TEST EVENT", date: Calendar.current.date(byAdding: .day, value: 4, to: Date()) ?? Date(), who: "Matt")
                 do {
                     try await eventsTable.addEvent(event: event)
                     toast = Toast(style: .success, message: "Event saved", width: 190)

@@ -36,21 +36,27 @@ struct CalendarPageView: View {
     var body: some View {
         ScrollView {
             VStack() {
-                Text("Calendar")
-                    .font(.title)
-                    .bold()
-                VStack(alignment: .leading, spacing: 0) {
-                    ForEach(dateList, id: \.hashValue) { date in
-                        CalendarView(events: model.events ?? [], date: date)
-                    }
-                    .overlay(
-                        HStack {
-                            Divider()
-                                .frame(width: 1)
-                                .overlay(.gray)
-                                .offset(x: -100)
+                LazyVStack(alignment: .leading, spacing: 0, pinnedViews: [.sectionHeaders]) {
+                    Section(header: ZStack {
+                        Text("Calendar")
+                            .font(.title)
+                            .bold()
                         }
-                    )
+                        .frame(maxWidth: .infinity)
+                        .background(.white)
+                    ) {
+                        ForEach(dateList, id: \.hashValue) { date in
+                            CalendarView(events: model.events ?? [], date: date)
+                        }
+                        .overlay(
+                            HStack {
+                                Divider()
+                                    .frame(width: 1)
+                                    .overlay(.gray)
+                                    .offset(x: -100)
+                            }
+                        )
+                    }
                 }
             }
         }

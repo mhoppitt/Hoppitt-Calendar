@@ -24,7 +24,7 @@ struct AppLayout: View {
                         Label("To Do", systemImage: "checklist")
                     }
             }
-            .toolbarBackground(Color.gray.opacity(0.02), for: .tabBar)
+            .toolbarBackground(Color.black, for: .tabBar)
             .toolbarBackground(.visible, for: .tabBar)
         }
     }

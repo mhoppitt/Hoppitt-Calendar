@@ -31,7 +31,7 @@ struct CalendarView: View {
                     Text(month)
                         .textCase(.uppercase)
                 }
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 7) {
                     ForEach(events, id: \.id) { event in
                         if (Calendar.current.isDate(event.date, equalTo: date, toGranularity: .day)) {
                             HStack(spacing: 10) {
@@ -52,6 +52,7 @@ struct CalendarView: View {
             Spacer()
         }
         .padding()
+        .opacity(Calendar.current.startOfDay(for: date) < Calendar.current.startOfDay(for: Date()) ? 0.5 : 1.0)
         Divider()
     }
 }
