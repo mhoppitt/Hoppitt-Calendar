@@ -19,7 +19,6 @@ struct ToastView: View {
             Image(systemName: style.iconFileName)
                 .foregroundColor(style.themeColor)
             Text(message)
-                .font(Font.caption)
       
             Spacer(minLength: 5)
       

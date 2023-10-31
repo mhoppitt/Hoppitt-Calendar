@@ -24,10 +24,10 @@ class EventsModel: ObservableObject {
 }
 
 struct CalendarPageView: View {
-    @State private var contentSize: CGSize = .zero
     @StateObject var model = EventsModel()
     @State public var refreshed: Bool = false
     @State public var dateList: [Date] = []
+    @State private var showingSheet = false
     
     func refreshView() {
         return refreshed.toggle()
@@ -70,9 +70,20 @@ struct CalendarPageView: View {
         .overlay(
             GeometryReader() { proxy in
                 ZStack {
-                    CreateEventButton()
+                    Button(action: {
+                        showingSheet.toggle()
+                    }) {
+                        Image(systemName: "plus.circle.fill")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                    }
+                    .sheet(isPresented: $showingSheet, onDismiss: {
+                        refreshView()
+                    }) {
+                        AddEventSheetView()
+                    }
                 }
-                .offset(x: 160, y: (proxy.size.height / 2) - 40)
+                .offset(x: 350, y: proxy.size.height - 70)
             }
         )
     }

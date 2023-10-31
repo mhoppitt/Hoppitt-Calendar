@@ -52,7 +52,7 @@ struct CalendarView: View {
             Spacer()
         }
         .padding()
-        .opacity(Calendar.current.startOfDay(for: date) < Calendar.current.startOfDay(for: Date()) ? 0.5 : 1.0)
+        .opacity(Calendar.current.startOfDay(for: date) < Calendar.current.startOfDay(for: Date()) ? 0.3 : 1.0)
         Divider()
     }
 }

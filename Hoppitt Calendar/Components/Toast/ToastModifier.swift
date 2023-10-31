@@ -16,10 +16,14 @@ struct ToastModifier: ViewModifier {
         content
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .overlay(
-                ZStack {
-                    mainToastView()
-                        .offset(x: -160, y: 0)
-                }.animation(.spring(), value: toast)
+                GeometryReader() { proxy in
+                    ZStack {
+                        mainToastView()
+                            .offset(x: 0, y: 0)
+                    }
+                    .animation(.spring(), value: toast)
+                    .offset(x: (proxy.size.width / 2) - (210 / 2), y: proxy.size.height - 70)
+                }
             )
             .onChange(of: toast) {
                 showToast()
