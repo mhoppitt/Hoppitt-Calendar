@@ -11,12 +11,14 @@ public struct CalendarEvent: Codable {
     var id: String
     var title: String
     var date: Date
+    var time: Date
     var who: String
     
-    init(id: String, title: String, date: Date, who: String) {
+    init(id: String, title: String, date: Date, time: Date, who: String) {
         self.id = id
         self.title = title
         self.date = date
+        self.time = time
         self.who = who
     }
 }

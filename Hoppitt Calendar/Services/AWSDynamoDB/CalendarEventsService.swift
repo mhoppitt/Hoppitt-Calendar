@@ -46,6 +46,12 @@ public class CalendarEventsTable {
         let dateString = dateFormatter.string(from: event.date)
         date.s = dateString
         
+        guard let time = AWSDynamoDBAttributeValue() else {
+            return print("Error setting time")
+        }
+        let timeString = dateFormatter.string(from: event.time)
+        time.s = timeString
+        
         guard let who = AWSDynamoDBAttributeValue() else {
             return print("Error setting person")
         }
@@ -55,6 +61,7 @@ public class CalendarEventsTable {
             "id": id,
             "title": title,
             "date": date,
+            "time": time,
             "who": who,
         ]
 
@@ -77,14 +84,16 @@ public class CalendarEventsTable {
             let id: String = record["id"]!.s.unsafelyUnwrapped
             let title: String = record["title"]!.s.unsafelyUnwrapped
             let dateString: String = record["date"]!.s.unsafelyUnwrapped
+            let timeString: String = record["time"]!.s.unsafelyUnwrapped
             let who: String = record["who"]!.s.unsafelyUnwrapped
             
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss Z"
             dateFormatter.timeZone = TimeZone(abbreviation: TimeZone.current.identifier)
             let date = dateFormatter.date(from: dateString) ?? Date()
+            let time = dateFormatter.date(from: timeString) ?? Date()
             
-            let event = CalendarEvent(id: id, title: title, date: date, who: who)
+            let event = CalendarEvent(id: id, title: title, date: date, time: time, who: who)
             eventList.append(event)
         }
         return eventList

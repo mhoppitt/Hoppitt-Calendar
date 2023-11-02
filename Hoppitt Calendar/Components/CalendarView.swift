@@ -43,7 +43,13 @@ struct CalendarView: View {
                                 } else {
                                     Image(systemName: "\(event.who.prefix(1).lowercased()).circle.fill")
                                 }
-                                Text(event.title)
+                                HStack(spacing: 0) {
+                                    Text(event.title)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text(event.time.formatted(date: .omitted, time: .shortened))
+                                        .textCase(.uppercase)
+                                        .frame(maxWidth: 80, alignment: .trailing)
+                                }
                             }
                         }
                     }
@@ -58,5 +64,5 @@ struct CalendarView: View {
 }
 
 #Preview {
-    CalendarView(events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Date(), who: "Matt"), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Date(), who: "Matt and Benji")], date: Date())
+    CalendarView(events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Date(), time: Date(), who: "Matt"), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Date(), time: Date(), who: "Matt and Benji")], date: Date())
 }
