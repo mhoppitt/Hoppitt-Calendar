@@ -117,7 +117,7 @@ public class CalendarEventsTable {
             return print("Error setting title")
         }
         title.s = event.title
-        var updatedTitle: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
+        let updatedTitle: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
         updatedTitle.value = title
         updatedTitle.action = AWSDynamoDBAttributeAction.put
         
@@ -129,7 +129,7 @@ public class CalendarEventsTable {
         dateFormatter.timeZone = TimeZone(abbreviation: TimeZone.current.identifier)
         let dateString = dateFormatter.string(from: event.date)
         date.s = dateString
-        var updatedDate: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
+        let updatedDate: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
         updatedDate.value = date
         updatedDate.action = AWSDynamoDBAttributeAction.put
         
@@ -138,7 +138,7 @@ public class CalendarEventsTable {
         }
         let timeString = dateFormatter.string(from: event.time)
         time.s = timeString
-        var updatedTime: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
+        let updatedTime: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
         updatedTime.value = time
         updatedTime.action = AWSDynamoDBAttributeAction.put
         
@@ -146,7 +146,7 @@ public class CalendarEventsTable {
             return print("Error setting person")
         }
         who.s = event.who
-        var updatedWho: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
+        let updatedWho: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
         updatedWho.value = who
         updatedWho.action = AWSDynamoDBAttributeAction.put
         
@@ -154,7 +154,7 @@ public class CalendarEventsTable {
             return print("Error setting isKeyDate")
         }
         isKeyDate.s = String(event.isKeyDate)
-        var updatedIsKeyDate: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
+        let updatedIsKeyDate: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
         updatedIsKeyDate.value = isKeyDate
         updatedIsKeyDate.action = AWSDynamoDBAttributeAction.put
         
@@ -174,5 +174,21 @@ public class CalendarEventsTable {
         updatedInput.returnValues = AWSDynamoDBReturnValue.updatedNew
 
         try await dynamoDB.updateItem(updatedInput)
+    }
+    
+    func deleteEvent(event: CalendarEvent) async throws {
+        let dynamoDB = AWSDynamoDB.default()
+        guard let id = AWSDynamoDBAttributeValue() else {
+            return print("Error setting id")
+        }
+        id.s = event.id
+        
+        guard let deleteInput = AWSDynamoDBDeleteItemInput() else {
+            return print("Error setting tableName")
+        }
+        deleteInput.tableName = self.tableName
+        deleteInput.key = ["id": id]
+
+        try await dynamoDB.deleteItem(deleteInput)
     }
 }

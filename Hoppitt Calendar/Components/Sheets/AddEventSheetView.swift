@@ -21,6 +21,8 @@ struct AddEventSheetView: View {
     
     let eventWhoList = ["Matt", "Benji", "Matt and Benji"]
     
+    let eventsTable = CalendarEventsTable()
+    
     var body: some View {
         VStack {
             HStack() {
@@ -35,7 +37,6 @@ struct AddEventSheetView: View {
                     .frame(maxWidth: .infinity)
                 Button(action: {
                     Task {
-                        let eventsTable = CalendarEventsTable()
                         do {
                             if (type == "Add") {
                                 let event: CalendarEvent = CalendarEvent(id: eventsTable.generateID(), title: eventTitle, date: eventDate, time: eventTime, who: eventWho, isKeyDate: isKeyDate)
@@ -78,6 +79,24 @@ struct AddEventSheetView: View {
                         }
                     }
                     Toggle("Key Date", isOn: $isKeyDate)
+                    if (type == "Edit") {
+                        Button(action: {
+                            Task {
+                                do {
+                                    let event: CalendarEvent = CalendarEvent(id: eventId, title: eventTitle, date: eventDate, time: eventTime, who: eventWho, isKeyDate: isKeyDate)
+                                    try await eventsTable.deleteEvent(event: event)
+                                    dismiss()
+                                } catch let error {
+                                    toast = Toast(style: .error, message: "Error", width: 210)
+                                    print(error)
+                                }
+                            }
+                        }) {
+                            Text("Delete Event")
+                                .frame(maxWidth: .infinity, maxHeight: 30)
+                        }
+                        .buttonStyle(.bordered)
+                    }
                 }
             }.padding()
             Spacer()
