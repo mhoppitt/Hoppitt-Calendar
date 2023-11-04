@@ -11,6 +11,7 @@ import SwiftUI
 class EventsModel: ObservableObject {
     @Published var events: [CalendarEvent]?
     var eventsTable = CalendarEventsTable()
+    @State public var refreshed: Bool = false
 
     init() {}
 
@@ -80,7 +81,7 @@ struct CalendarPageView: View {
                     .sheet(isPresented: $showingSheet, onDismiss: {
                         refreshView()
                     }) {
-                        AddEventSheetView()
+                        AddEventSheetView(type: "Add")
                     }
                 }
                 .offset(x: 350, y: proxy.size.height - 70)

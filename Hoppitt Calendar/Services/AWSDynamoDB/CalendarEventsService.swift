@@ -56,13 +56,19 @@ public class CalendarEventsTable {
             return print("Error setting person")
         }
         who.s = event.who
-
+        
+        guard let isKeyDate = AWSDynamoDBAttributeValue() else {
+            return print("Error setting isKeyDate")
+        }
+        isKeyDate.s = String(event.isKeyDate)
+        
         input.item = [
             "id": id,
             "title": title,
             "date": date,
             "time": time,
             "who": who,
+            "isKeyDate": isKeyDate,
         ]
 
         try await dynamoDB.putItem(input)
@@ -86,6 +92,7 @@ public class CalendarEventsTable {
             let dateString: String = record["date"]!.s.unsafelyUnwrapped
             let timeString: String = record["time"]!.s.unsafelyUnwrapped
             let who: String = record["who"]!.s.unsafelyUnwrapped
+            let isKeyDate: String = record["isKeyDate"]!.s.unsafelyUnwrapped
             
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss Z"
@@ -93,7 +100,7 @@ public class CalendarEventsTable {
             let date = dateFormatter.date(from: dateString) ?? Date()
             let time = dateFormatter.date(from: timeString) ?? Date()
             
-            let event = CalendarEvent(id: id, title: title, date: date, time: time, who: who)
+            let event = CalendarEvent(id: id, title: title, date: date, time: time, who: who, isKeyDate: Bool(isKeyDate) ?? false)
             eventList.append(event)
         }
         return eventList

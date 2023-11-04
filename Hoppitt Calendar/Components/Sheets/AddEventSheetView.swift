@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct AddEventSheetView: View {
+    var type: String
+    
     @Environment(\.dismiss) private var dismiss
     @State private var toast: Toast? = nil
-    @State private var eventTitle: String = ""
-    @State private var eventWho = "Matt"
+    @State var eventTitle: String = ""
+    @State var eventDate: Date = Date()
+    @State var eventTime: Date = Date()
+    @State var eventWho = "Matt"
+    @State var isKeyDate: Bool = false
+    
     let eventWhoList = ["Matt", "Benji", "Matt and Benji"]
-    @State private var eventDate: Date = Date()
-    @State private var eventTime: Date = Date()
-    @State private var isKeyDate: Bool = false
     
     var body: some View {
         VStack {
@@ -25,14 +28,14 @@ struct AddEventSheetView: View {
                 }) {
                     Text("Cancel")
                 }.frame(maxWidth: .infinity, alignment: .leading)
-                Text("Add Event")
+                Text("\(type) Event")
                     .font(.title2)
                     .bold()
                     .frame(maxWidth: .infinity)
                 Button(action: {
                     Task {
                         let eventsTable = CalendarEventsTable()
-                        let event: CalendarEvent = CalendarEvent(id: eventsTable.generateID(), title: eventTitle, date: eventDate, time: eventTime, who: eventWho)
+                        let event: CalendarEvent = CalendarEvent(id: eventsTable.generateID(), title: eventTitle, date: eventDate, time: eventTime, who: eventWho, isKeyDate: isKeyDate)
                         do {
                             try await eventsTable.addEvent(event: event)
                             dismiss()
@@ -80,5 +83,5 @@ struct AddEventSheetView: View {
 }
 
 #Preview {
-    AddEventSheetView()
+    AddEventSheetView(type: "Add")
 }
