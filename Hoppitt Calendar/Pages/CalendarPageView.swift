@@ -48,7 +48,7 @@ struct CalendarPageView: View {
                         .background(.white)
                     ) {
                         ForEach(dateList, id: \.hashValue) { date in
-                            CalendarView(events: model.events ?? [], date: date)
+                            CalendarView(events: model.events ?? [], date: date, refreshed: $refreshed)
                         }
                         .overlay(
                             HStack {

@@ -13,6 +13,7 @@ struct CalendarView: View {
     
     @State private var showingSheet = false
     @State private var isPresentingEvent: CalendarEvent? = nil
+    @Binding var refreshed: Bool
     
     var body: some View {
         HStack {
@@ -41,7 +42,7 @@ struct CalendarView: View {
                             showingSheet.toggle()
                         }) {
                             if (Calendar.current.isDate(event.date, equalTo: date, toGranularity: .day)) {
-                                HStack(spacing: 10) {
+                                HStack(spacing: 5) {
                                     if (event.who == "Matt and Benji") {
                                         HStack(spacing: 0) {
                                             Image(systemName: "m.circle.fill")
@@ -65,7 +66,7 @@ struct CalendarView: View {
                         .foregroundStyle(.black)
                     }
                     .sheet(item: $isPresentingEvent, onDismiss: {
-//                        refreshView()
+                        self.refreshed.toggle()
                     }) { event in
                         AddEventSheetView(type: "Edit", eventId: event.id, eventTitle: event.title, eventDate: event.date, eventTime: event.time, eventWho: event.who, isKeyDate: event.isKeyDate)
                     }
@@ -79,6 +80,12 @@ struct CalendarView: View {
     }
 }
 
+struct CalendarView_Preview: PreviewProvider {
+  static var previews: some View {
+      CalendarView(events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Date(), time: Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh", date: Date(), time: Date(), who: "Matt and Benji", isKeyDate: false)], date: Date(), refreshed: .constant(true))
+  }
+}
+
 #Preview {
-    CalendarView(events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Date(), time: Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh", date: Date(), time: Date(), who: "Matt and Benji", isKeyDate: false)], date: Date())
+    CalendarView_Preview.previews
 }
