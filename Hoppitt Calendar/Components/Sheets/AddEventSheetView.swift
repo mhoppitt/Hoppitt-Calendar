@@ -12,6 +12,7 @@ struct AddEventSheetView: View {
     
     @Environment(\.dismiss) private var dismiss
     @State private var toast: Toast? = nil
+    @State var eventId: String = ""
     @State var eventTitle: String = ""
     @State var eventDate: Date = Date()
     @State var eventTime: Date = Date()
@@ -35,9 +36,14 @@ struct AddEventSheetView: View {
                 Button(action: {
                     Task {
                         let eventsTable = CalendarEventsTable()
-                        let event: CalendarEvent = CalendarEvent(id: eventsTable.generateID(), title: eventTitle, date: eventDate, time: eventTime, who: eventWho, isKeyDate: isKeyDate)
                         do {
-                            try await eventsTable.addEvent(event: event)
+                            if (type == "Add") {
+                                let event: CalendarEvent = CalendarEvent(id: eventsTable.generateID(), title: eventTitle, date: eventDate, time: eventTime, who: eventWho, isKeyDate: isKeyDate)
+                                try await eventsTable.addEvent(event: event)
+                            } else {
+                                let event: CalendarEvent = CalendarEvent(id: eventId, title: eventTitle, date: eventDate, time: eventTime, who: eventWho, isKeyDate: isKeyDate)
+                                try await eventsTable.editEvent(event: event)
+                            }
                             dismiss()
                         } catch let error {
                             toast = Toast(style: .error, message: "Error", width: 210)

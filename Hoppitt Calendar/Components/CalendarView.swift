@@ -67,7 +67,7 @@ struct CalendarView: View {
                     .sheet(item: $isPresentingEvent, onDismiss: {
 //                        refreshView()
                     }) { event in
-                        AddEventSheetView(type: "Edit", eventTitle: event.title, eventDate: event.date, eventTime: event.time, eventWho: event.who, isKeyDate: event.isKeyDate)
+                        AddEventSheetView(type: "Edit", eventId: event.id, eventTitle: event.title, eventDate: event.date, eventTime: event.time, eventWho: event.who, isKeyDate: event.isKeyDate)
                     }
                 }
             }

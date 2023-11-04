@@ -105,4 +105,74 @@ public class CalendarEventsTable {
         }
         return eventList
     }
+    
+    func editEvent(event: CalendarEvent) async throws {
+        let dynamoDB = AWSDynamoDB.default()
+        guard let id = AWSDynamoDBAttributeValue() else {
+            return print("Error setting id")
+        }
+        id.s = event.id
+
+        guard let title = AWSDynamoDBAttributeValue() else {
+            return print("Error setting title")
+        }
+        title.s = event.title
+        var updatedTitle: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
+        updatedTitle.value = title
+        updatedTitle.action = AWSDynamoDBAttributeAction.put
+        
+        guard let date = AWSDynamoDBAttributeValue() else {
+            return print("Error setting date")
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss Z"
+        dateFormatter.timeZone = TimeZone(abbreviation: TimeZone.current.identifier)
+        let dateString = dateFormatter.string(from: event.date)
+        date.s = dateString
+        var updatedDate: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
+        updatedDate.value = date
+        updatedDate.action = AWSDynamoDBAttributeAction.put
+        
+        guard let time = AWSDynamoDBAttributeValue() else {
+            return print("Error setting time")
+        }
+        let timeString = dateFormatter.string(from: event.time)
+        time.s = timeString
+        var updatedTime: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
+        updatedTime.value = time
+        updatedTime.action = AWSDynamoDBAttributeAction.put
+        
+        guard let who = AWSDynamoDBAttributeValue() else {
+            return print("Error setting person")
+        }
+        who.s = event.who
+        var updatedWho: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
+        updatedWho.value = who
+        updatedWho.action = AWSDynamoDBAttributeAction.put
+        
+        guard let isKeyDate = AWSDynamoDBAttributeValue() else {
+            return print("Error setting isKeyDate")
+        }
+        isKeyDate.s = String(event.isKeyDate)
+        var updatedIsKeyDate: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
+        updatedIsKeyDate.value = isKeyDate
+        updatedIsKeyDate.action = AWSDynamoDBAttributeAction.put
+        
+        guard let updatedInput = AWSDynamoDBUpdateItemInput() else {
+            return print("Error setting tableName")
+        }
+        updatedInput.tableName = self.tableName
+        updatedInput.key = ["id": id]
+        
+        updatedInput.attributeUpdates = [
+            "title": updatedTitle,
+            "date": updatedDate,
+            "time": updatedTime,
+            "who": updatedWho,
+            "isKeyDate": updatedIsKeyDate,
+        ]
+        updatedInput.returnValues = AWSDynamoDBReturnValue.updatedNew
+
+        try await dynamoDB.updateItem(updatedInput)
+    }
 }
