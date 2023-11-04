@@ -103,7 +103,10 @@ public class CalendarEventsTable {
             let event = CalendarEvent(id: id, title: title, date: date, time: time, who: who, isKeyDate: Bool(isKeyDate) ?? false)
             eventList.append(event)
         }
-        return eventList
+        let sortedEventList = eventList.sorted {
+            $0.time < $1.time
+        }
+        return sortedEventList
     }
     
     func editEvent(event: CalendarEvent) async throws {

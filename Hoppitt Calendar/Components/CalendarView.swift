@@ -34,7 +34,7 @@ struct CalendarView: View {
                     Text(month)
                         .textCase(.uppercase)
                 }
-                VStack(alignment: .leading, spacing: 7) {
+                VStack(alignment: .leading) {
                     ForEach(events, id: \.id) { event in
                         Button(action: {
                             isPresentingEvent = event
