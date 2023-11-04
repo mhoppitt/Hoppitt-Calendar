@@ -18,6 +18,9 @@ class EventsModel: ObservableObject {
     func fetchEvents() async {
         do {
             events = try await eventsTable.getEvents()
+            Task {
+                try await eventsTable.cleanupTable(events: events ?? [])
+            }
         } catch let error {
             print(error)
         }

@@ -194,4 +194,12 @@ public class CalendarEventsTable {
 
         try await dynamoDB.deleteItem(deleteInput)
     }
+    
+    func cleanupTable(events: [CalendarEvent]) async throws {
+        for event in events {
+            if event.date < DateService().getCurrentWeek()[0] {
+                try await deleteEvent(event: event)
+            }
+        }
+    }
 }
