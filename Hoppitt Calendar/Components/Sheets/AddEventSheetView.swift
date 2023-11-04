@@ -61,7 +61,7 @@ struct AddEventSheetView: View {
                 Section() {
                     HStack() {
                         Text("Enter an Event")
-                        TextField("Event Title", text: $eventTitle)
+                        TextField("Event Title", text: $eventTitle, axis: .vertical)
                             .multilineTextAlignment(.trailing)
                             .padding(.trailing, 5)
                     }

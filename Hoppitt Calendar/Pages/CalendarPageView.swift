@@ -29,6 +29,7 @@ struct CalendarPageView: View {
     @State public var refreshed: Bool = false
     @State public var dateList: [Date] = []
     @State private var showingSheet = false
+    @State private var showingSpinner: Bool = true
     
     func refreshView() {
         return refreshed.toggle()
@@ -67,6 +68,7 @@ struct CalendarPageView: View {
         .task(id: refreshed) {
             await model.fetchEvents()
             dateList = DateService().getCurrentWeek()
+            showingSpinner = false
         }
         .overlay(
             GeometryReader() { proxy in
@@ -84,7 +86,13 @@ struct CalendarPageView: View {
                         AddEventSheetView(type: "Add")
                     }
                 }
-                .offset(x: 350, y: proxy.size.height - 70)
+                .offset(x: proxy.size.width - 70, y: proxy.size.height - 70)
+                ZStack {
+                    if (showingSpinner) {
+                        ProgressView()
+                            .scaleEffect(2.0)
+                    }
+                }.offset(x: proxy.size.width / 2, y: proxy.size.height / 2)
             }
         )
     }
