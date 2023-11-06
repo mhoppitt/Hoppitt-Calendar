@@ -10,6 +10,16 @@
 		3816F9022AEDD83500BD54B0 /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3816F9012AEDD83500BD54B0 /* DateService.swift */; };
 		384A8DA32AEDF7220035028A /* CalendarDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384A8DA22AEDF7220035028A /* CalendarDate.swift */; };
 		385DC8FE2AED2E9F001F3A11 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385DC8FD2AED2E9F001F3A11 /* CalendarView.swift */; };
+		386880522AF64BF700EEFACD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 386880512AF64BF700EEFACD /* WidgetKit.framework */; };
+		386880542AF64BF700EEFACD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 386880532AF64BF700EEFACD /* SwiftUI.framework */; };
+		386880572AF64BF700EEFACD /* HoppittCalendarWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386880562AF64BF700EEFACD /* HoppittCalendarWidgetBundle.swift */; };
+		3868805B2AF64BF700EEFACD /* HoppittCalendarWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3868805A2AF64BF700EEFACD /* HoppittCalendarWidget.swift */; };
+		3868805D2AF64BFD00EEFACD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3868805C2AF64BFD00EEFACD /* Assets.xcassets */; };
+		386880692AF7063900EEFACD /* CalendarEventsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3885D6252AEB93F200616336 /* CalendarEventsService.swift */; };
+		3868806A2AF7071C00EEFACD /* CalendarEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3885D62C2AEB9D3C00616336 /* CalendarEvent.swift */; };
+		3868806B2AF7076400EEFACD /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ED26A42AEC9BB30026CA27 /* Secrets.swift */; };
+		386880742AF7107D00EEFACD /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3816F9012AEDD83500BD54B0 /* DateService.swift */; };
+		386880752AF710A200EEFACD /* HoppittCalendarWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 3868804F2AF64BF700EEFACD /* HoppittCalendarWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		387E20A82AF0522A0074F5CD /* AddEventSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387E20A72AF0522A0074F5CD /* AddEventSheetView.swift */; };
 		3885D5F32AEB4FC500616336 /* Hoppitt_CalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3885D5F22AEB4FC500616336 /* Hoppitt_CalendarApp.swift */; };
 		3885D5F72AEB4FCC00616336 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3885D5F62AEB4FCC00616336 /* Assets.xcassets */; };
@@ -26,7 +36,6 @@
 		38ED26A72AECA56C0026CA27 /* AppLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ED26A62AECA56C0026CA27 /* AppLayout.swift */; };
 		38ED26A92AECAA380026CA27 /* KeyDatesPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ED26A82AECAA380026CA27 /* KeyDatesPageView.swift */; };
 		38ED26AB2AECAA810026CA27 /* ToDoPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ED26AA2AECAA810026CA27 /* ToDoPageView.swift */; };
-		38ED26AE2AECB39C0026CA27 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 38ED26AD2AECB39C0026CA27 /* Toast */; };
 		38ED26B12AECBA0C0026CA27 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ED26B02AECBA0C0026CA27 /* Toast.swift */; };
 		38ED26B32AECBB550026CA27 /* ToastStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ED26B22AECBB550026CA27 /* ToastStyle.swift */; };
 		38ED26B52AECBB970026CA27 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ED26B42AECBB970026CA27 /* ToastView.swift */; };
@@ -36,6 +45,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		386880762AF710A200EEFACD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3885D5E72AEB4FC500616336 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3868804E2AF64BF700EEFACD;
+			remoteInfo = HoppittCalendarWidgetExtension;
+		};
 		3885D6002AEB4FCC00616336 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3885D5E72AEB4FC500616336 /* Project object */;
@@ -52,10 +68,31 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		386880782AF710A200EEFACD /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				386880752AF710A200EEFACD /* HoppittCalendarWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		3816F9012AEDD83500BD54B0 /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
 		384A8DA22AEDF7220035028A /* CalendarDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDate.swift; sourceTree = "<group>"; };
 		385DC8FD2AED2E9F001F3A11 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		3868804F2AF64BF700EEFACD /* HoppittCalendarWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HoppittCalendarWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		386880512AF64BF700EEFACD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		386880532AF64BF700EEFACD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		386880562AF64BF700EEFACD /* HoppittCalendarWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoppittCalendarWidgetBundle.swift; sourceTree = "<group>"; };
+		3868805A2AF64BF700EEFACD /* HoppittCalendarWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoppittCalendarWidget.swift; sourceTree = "<group>"; };
+		3868805C2AF64BFD00EEFACD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3868805E2AF64BFD00EEFACD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		387E20A72AF0522A0074F5CD /* AddEventSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventSheetView.swift; sourceTree = "<group>"; };
 		3885D5EF2AEB4FC500616336 /* Hoppitt Calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hoppitt Calendar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3885D5F22AEB4FC500616336 /* Hoppitt_CalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hoppitt_CalendarApp.swift; sourceTree = "<group>"; };
@@ -83,11 +120,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3868804C2AF64BF700EEFACD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				386880542AF64BF700EEFACD /* SwiftUI.framework in Frameworks */,
+				386880522AF64BF700EEFACD /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3885D5EC2AEB4FC500616336 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38ED26AE2AECB39C0026CA27 /* Toast in Frameworks */,
 				3885D62B2AEB96C700616336 /* AWSDynamoDB in Frameworks */,
 				3885D6292AEB96C700616336 /* AWSCore in Frameworks */,
 			);
@@ -128,6 +173,26 @@
 			path = DateService;
 			sourceTree = "<group>";
 		};
+		386880502AF64BF700EEFACD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				386880512AF64BF700EEFACD /* WidgetKit.framework */,
+				386880532AF64BF700EEFACD /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		386880552AF64BF700EEFACD /* HoppittCalendarWidget */ = {
+			isa = PBXGroup;
+			children = (
+				386880562AF64BF700EEFACD /* HoppittCalendarWidgetBundle.swift */,
+				3868805A2AF64BF700EEFACD /* HoppittCalendarWidget.swift */,
+				3868805C2AF64BFD00EEFACD /* Assets.xcassets */,
+				3868805E2AF64BFD00EEFACD /* Info.plist */,
+			);
+			path = HoppittCalendarWidget;
+			sourceTree = "<group>";
+		};
 		387E20A62AF052110074F5CD /* Sheets */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +208,8 @@
 				3885D5F12AEB4FC500616336 /* Hoppitt Calendar */,
 				3885D6022AEB4FCC00616336 /* Hoppitt CalendarTests */,
 				3885D60C2AEB4FCC00616336 /* Hoppitt CalendarUITests */,
+				386880552AF64BF700EEFACD /* HoppittCalendarWidget */,
+				386880502AF64BF700EEFACD /* Frameworks */,
 				3885D5F02AEB4FC500616336 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -153,6 +220,7 @@
 				3885D5EF2AEB4FC500616336 /* Hoppitt Calendar.app */,
 				3885D5FF2AEB4FCC00616336 /* Hoppitt CalendarTests.xctest */,
 				3885D6092AEB4FCC00616336 /* Hoppitt CalendarUITests.xctest */,
+				3868804F2AF64BF700EEFACD /* HoppittCalendarWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -258,6 +326,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3868804E2AF64BF700EEFACD /* HoppittCalendarWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 386880652AF64BFD00EEFACD /* Build configuration list for PBXNativeTarget "HoppittCalendarWidgetExtension" */;
+			buildPhases = (
+				3868804B2AF64BF700EEFACD /* Sources */,
+				3868804C2AF64BF700EEFACD /* Frameworks */,
+				3868804D2AF64BF700EEFACD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HoppittCalendarWidgetExtension;
+			productName = HoppittCalendarWidgetExtension;
+			productReference = 3868804F2AF64BF700EEFACD /* HoppittCalendarWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		3885D5EE2AEB4FC500616336 /* Hoppitt Calendar */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3885D6132AEB4FCC00616336 /* Build configuration list for PBXNativeTarget "Hoppitt Calendar" */;
@@ -265,16 +350,17 @@
 				3885D5EB2AEB4FC500616336 /* Sources */,
 				3885D5EC2AEB4FC500616336 /* Frameworks */,
 				3885D5ED2AEB4FC500616336 /* Resources */,
+				386880782AF710A200EEFACD /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				386880772AF710A200EEFACD /* PBXTargetDependency */,
 			);
 			name = "Hoppitt Calendar";
 			packageProductDependencies = (
 				3885D6282AEB96C700616336 /* AWSCore */,
 				3885D62A2AEB96C700616336 /* AWSDynamoDB */,
-				38ED26AD2AECB39C0026CA27 /* Toast */,
 			);
 			productName = "Hoppitt Calendar";
 			productReference = 3885D5EF2AEB4FC500616336 /* Hoppitt Calendar.app */;
@@ -326,6 +412,9 @@
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					3868804E2AF64BF700EEFACD = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
 					3885D5EE2AEB4FC500616336 = {
 						CreatedOnToolsVersion = 15.0.1;
 					};
@@ -359,11 +448,20 @@
 				3885D5EE2AEB4FC500616336 /* Hoppitt Calendar */,
 				3885D5FE2AEB4FCC00616336 /* Hoppitt CalendarTests */,
 				3885D6082AEB4FCC00616336 /* Hoppitt CalendarUITests */,
+				3868804E2AF64BF700EEFACD /* HoppittCalendarWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3868804D2AF64BF700EEFACD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3868805D2AF64BFD00EEFACD /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3885D5ED2AEB4FC500616336 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -390,6 +488,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3868804B2AF64BF700EEFACD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				386880572AF64BF700EEFACD /* HoppittCalendarWidgetBundle.swift in Sources */,
+				3868806B2AF7076400EEFACD /* Secrets.swift in Sources */,
+				386880692AF7063900EEFACD /* CalendarEventsService.swift in Sources */,
+				386880742AF7107D00EEFACD /* DateService.swift in Sources */,
+				3868806A2AF7071C00EEFACD /* CalendarEvent.swift in Sources */,
+				3868805B2AF64BF700EEFACD /* HoppittCalendarWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3885D5EB2AEB4FC500616336 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -435,6 +546,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		386880772AF710A200EEFACD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3868804E2AF64BF700EEFACD /* HoppittCalendarWidgetExtension */;
+			targetProxy = 386880762AF710A200EEFACD /* PBXContainerItemProxy */;
+		};
 		3885D6012AEB4FCC00616336 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3885D5EE2AEB4FC500616336 /* Hoppitt Calendar */;
@@ -448,6 +564,60 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		386880632AF64BFD00EEFACD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = W8WDUK8Q48;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HoppittCalendarWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = HoppittCalendarWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "au.com.mhoppitt.Hoppitt-Calendar.HoppittCalendarWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		386880642AF64BFD00EEFACD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = W8WDUK8Q48;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HoppittCalendarWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = HoppittCalendarWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "au.com.mhoppitt.Hoppitt-Calendar.HoppittCalendarWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		3885D6112AEB4FCC00616336 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -704,6 +874,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		386880652AF64BFD00EEFACD /* Build configuration list for PBXNativeTarget "HoppittCalendarWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				386880632AF64BFD00EEFACD /* Debug */,
+				386880642AF64BFD00EEFACD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		3885D5EA2AEB4FC500616336 /* Build configuration list for PBXProject "Hoppitt Calendar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -771,11 +950,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3885D6272AEB96C700616336 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */;
 			productName = AWSDynamoDB;
-		};
-		38ED26AD2AECB39C0026CA27 /* Toast */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 38ED26AC2AECB39B0026CA27 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
-			productName = Toast;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

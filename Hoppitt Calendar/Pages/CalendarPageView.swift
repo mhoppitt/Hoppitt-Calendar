@@ -11,7 +11,6 @@ import SwiftUI
 class EventsModel: ObservableObject {
     @Published var events: [CalendarEvent]?
     var eventsTable = CalendarEventsTable()
-    @State public var refreshed: Bool = false
 
     init() {}
 
