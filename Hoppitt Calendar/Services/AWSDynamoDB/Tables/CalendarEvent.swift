@@ -11,15 +11,13 @@ public struct CalendarEvent: Codable, Identifiable {
     public var id: String
     var title: String
     var date: Date
-    var time: Date
     var who: String
     var isKeyDate: Bool
     
-    init(id: String, title: String, date: Date, time: Date, who: String, isKeyDate: Bool) {
+    init(id: String, title: String, date: Date, who: String, isKeyDate: Bool) {
         self.id = id
         self.title = title
         self.date = date
-        self.time = time
         self.who = who
         self.isKeyDate = isKeyDate
     }

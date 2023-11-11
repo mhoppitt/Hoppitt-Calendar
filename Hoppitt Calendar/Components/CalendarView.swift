@@ -55,7 +55,7 @@ struct CalendarView: View {
                                         Text(event.title)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .multilineTextAlignment(.leading)
-                                        Text(event.time.formatted(date: .omitted, time: .shortened))
+                                        Text(event.date.formatted(date: .omitted, time: .shortened))
                                             .textCase(.uppercase)
                                             .frame(maxWidth: 80, alignment: .trailing)
                                     }
@@ -69,7 +69,7 @@ struct CalendarView: View {
                     .sheet(item: $isPresentingEvent, onDismiss: {
                         self.refreshed.toggle()
                     }) { event in
-                        AddEventSheetView(type: "Edit", eventId: event.id, eventTitle: event.title, eventDate: event.date, eventTime: event.time, eventWho: event.who, isKeyDate: event.isKeyDate)
+                        AddEventSheetView(type: "Edit", eventId: event.id, eventTitle: event.title, eventDate: event.date, eventWho: event.who, isKeyDate: event.isKeyDate)
                     }
                 }
             }
@@ -83,7 +83,7 @@ struct CalendarView: View {
 
 struct CalendarView_Preview: PreviewProvider {
   static var previews: some View {
-      CalendarView(events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Date(), time: Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh", date: Date(), time: Date(), who: "Matt and Benji", isKeyDate: false)], date: Date(), refreshed: .constant(true))
+      CalendarView(events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh", date: Date(), who: "Matt and Benji", isKeyDate: false)], date: Date(), refreshed: .constant(true))
   }
 }
 

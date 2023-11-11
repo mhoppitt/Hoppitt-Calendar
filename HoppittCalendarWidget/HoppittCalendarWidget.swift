@@ -96,7 +96,7 @@ struct HoppittCalendarWidgetEntryView : View {
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .font(.system(size: 16))
                                         .multilineTextAlignment(.leading)
-                                    Text(event.time.formatted(date: .omitted, time: .shortened))
+                                    Text(event.date.formatted(date: .omitted, time: .shortened))
                                         .textCase(.uppercase)
                                         .font(.system(size: 14))
                                         .frame(maxWidth: 80, alignment: .trailing)
@@ -132,5 +132,5 @@ struct HoppittCalendarWidget: Widget {
 #Preview(as: .systemMedium) {
     HoppittCalendarWidget()
 } timeline: {
-    CalendarWidgetEntry(date: Date(), events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Date(), time: Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh", date: Date(), time: Date(), who: "Matt and Benji", isKeyDate: false)])
+    CalendarWidgetEntry(date: Date(), events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh", date: Date(), who: "Matt and Benji", isKeyDate: false)])
 }
