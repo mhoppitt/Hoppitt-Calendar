@@ -80,32 +80,38 @@ struct HoppittCalendarWidgetEntryView : View {
                         .font(.system(size: 16))
                 }
                 VStack(alignment: .leading) {
-                    ForEach(entry.events, id: \.id) { event in
-                        if (Calendar.current.isDate(event.date, equalTo: entry.date, toGranularity: .day)) {
-                            HStack(spacing: 5) {
-                                if (event.who == "Matt and Benji") {
-                                    HStack(spacing: 0) {
-                                        Image(systemName: "m.circle.fill")
-                                        Image(systemName: "b.circle.fill")
+                    if (entry.events.isEmpty) {
+                        Text("No events today")
+                            .padding(.leading, 10)
+                    } else {
+                        ForEach(entry.events, id: \.id) { event in
+                            if (Calendar.current.isDate(event.date, equalTo: entry.date, toGranularity: .day)) {
+                                HStack(spacing: 5) {
+                                    if (event.who == "Matt and Benji") {
+                                        HStack(spacing: 0) {
+                                            Image(systemName: "m.circle.fill")
+                                            Image(systemName: "b.circle.fill")
+                                        }
+                                    } else {
+                                        Image(systemName: "\(event.who.prefix(1).lowercased()).circle.fill")
                                     }
-                                } else {
-                                    Image(systemName: "\(event.who.prefix(1).lowercased()).circle.fill")
-                                }
-                                HStack(spacing: 0) {
-                                    Text(event.title)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .font(.system(size: 16))
-                                        .multilineTextAlignment(.leading)
-                                    Text(event.date.formatted(date: .omitted, time: .shortened))
-                                        .textCase(.uppercase)
-                                        .font(.system(size: 14))
-                                        .frame(maxWidth: 80, alignment: .trailing)
+                                    HStack(spacing: 0) {
+                                        Text(event.title)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .font(.system(size: 16))
+                                            .multilineTextAlignment(.leading)
+                                        Text(event.date.formatted(date: .omitted, time: .shortened))
+                                            .textCase(.uppercase)
+                                            .font(.system(size: 14))
+                                            .frame(maxWidth: 80, alignment: .trailing)
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+            Spacer()
         }
     }
 }
