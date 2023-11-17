@@ -44,14 +44,20 @@ struct CalendarWidgetEntry: TimelineEntry {
 class EventsModel: ObservableObject {
     @Published var events: [CalendarEvent]?
     var eventsTable = CalendarEventsTable()
+    var eventsToday: [CalendarEvent]?
 
     func fetchEvents() async -> [CalendarEvent] {
         do {
             events = try await eventsTable.getEvents()
+            ForEach(events ?? [], id: \.id) { event in
+                if (Calendar.current.isDate(event.date, equalTo: Date(), toGranularity: .day)) {
+                    let _ = self.eventsToday?.append(event)
+                }
+            }
         } catch let error {
             print(error)
         }
-        return events ?? []
+        return eventsToday ?? []
     }
 }
 
@@ -138,5 +144,5 @@ struct HoppittCalendarWidget: Widget {
 #Preview(as: .systemMedium) {
     HoppittCalendarWidget()
 } timeline: {
-    CalendarWidgetEntry(date: Date(), events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh", date: Date(), who: "Matt and Benji", isKeyDate: false)])
+    CalendarWidgetEntry(date: Date(), events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh", date: Date(), who: "Matt and Benji", isKeyDate: false)])
 }
