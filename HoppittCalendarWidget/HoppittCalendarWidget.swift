@@ -44,20 +44,20 @@ struct CalendarWidgetEntry: TimelineEntry {
 class EventsModel: ObservableObject {
     @Published var events: [CalendarEvent]?
     var eventsTable = CalendarEventsTable()
-    var eventsToday: [CalendarEvent]?
+    var eventsToday: [CalendarEvent] = []
 
     func fetchEvents() async -> [CalendarEvent] {
         do {
             events = try await eventsTable.getEvents()
-            ForEach(events ?? [], id: \.id) { event in
+            for event in events.unsafelyUnwrapped {
                 if (Calendar.current.isDate(event.date, equalTo: Date(), toGranularity: .day)) {
-                    let _ = self.eventsToday?.append(event)
+                    eventsToday.append(event)
                 }
             }
         } catch let error {
             print(error)
         }
-        return eventsToday ?? []
+        return eventsToday
     }
 }
 
