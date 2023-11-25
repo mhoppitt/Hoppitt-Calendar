@@ -11,16 +11,7 @@ import SwiftUI
 struct Hoppitt_CalendarApp: App {
     var body: some Scene {
         WindowGroup {
-            ZStack {
-                AppLayout()
-                
-                GeometryReader { reader in
-                    Color.white
-                        .frame(height: reader.safeAreaInsets.top, alignment: .top)
-                        .ignoresSafeArea()
-                }
-            }
-            .zIndex(100000)
+            AppLayout()
         }
     }
 }

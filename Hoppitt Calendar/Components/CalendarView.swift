@@ -14,6 +14,7 @@ struct CalendarView: View {
     @State private var showingSheet = false
     @State private var isPresentingEvent: CalendarEvent? = nil
     @Binding var refreshed: Bool
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         HStack {
@@ -64,7 +65,7 @@ struct CalendarView: View {
                         }
                         .disabled(Calendar.current.startOfDay(for: date) < Calendar.current.startOfDay(for: Date()))
                         .padding(.leading, 2)
-                        .foregroundStyle(.black)
+                        .foregroundStyle(colorScheme == .dark ? .white : .black)
                     }
                     .sheet(item: $isPresentingEvent, onDismiss: {
                         self.refreshed.toggle()
@@ -78,6 +79,8 @@ struct CalendarView: View {
         .padding()
         .opacity(Calendar.current.startOfDay(for: date) < Calendar.current.startOfDay(for: Date()) ? 0.3 : 1.0)
         Divider()
+            .overlay(.gray)
+            .opacity(0.5)
     }
 }
 

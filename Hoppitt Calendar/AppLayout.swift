@@ -32,4 +32,5 @@ struct AppLayout: View {
 
 #Preview {
     AppLayout()
+        .environment(\.colorScheme, .dark)
 }

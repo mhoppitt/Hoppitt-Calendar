@@ -32,6 +32,7 @@ struct CalendarPageView: View {
     @State public var dateList: [Date] = []
     @State private var showingSheet = false
     @State private var showingSpinner: Bool = true
+    @Environment(\.colorScheme) var colorScheme
     
     func refreshView() {
         return refreshed.toggle()
@@ -39,30 +40,22 @@ struct CalendarPageView: View {
     
     var body: some View {
         ScrollView {
-            VStack() {
-                LazyVStack(alignment: .leading, spacing: 0, pinnedViews: [.sectionHeaders]) {
-                    Section(header: ZStack {
-                        Text("Calendar")
-                            .font(.title)
-                            .bold()
-                        }
-                        .frame(maxWidth: .infinity)
-                        .background(.white)
-                    ) {
-                        ForEach(dateList, id: \.hashValue) { date in
-                            CalendarView(events: model.events ?? [], date: date, refreshed: $refreshed)
-                        }
-                        .overlay(
-                            HStack {
-                                Divider()
-                                    .frame(width: 1)
-                                    .overlay(.gray)
-                                    .offset(x: -100)
-                            }
-                        )
-                    }
+            VStack(spacing: 0) {
+                Text("Calendar")
+                    .font(.title)
+                    .bold()
+                ForEach(dateList, id: \.hashValue) { date in
+                    CalendarView(events: model.events ?? [], date: date, refreshed: $refreshed)
                 }
             }
+            .overlay(
+                HStack {
+                    Divider()
+                        .frame(width: 1)
+                        .overlay(.gray)
+                        .offset(x: -100)
+                }
+            )
         }
         .refreshable {
             refreshView()

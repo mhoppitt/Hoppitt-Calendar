@@ -11,6 +11,7 @@ struct AddEventSheetView: View {
     var type: String
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) var colorScheme
     @State private var toast: Toast? = nil
     @State var eventId: String = ""
     @State var eventTitle: String = ""
@@ -103,6 +104,7 @@ struct AddEventSheetView: View {
         .toastView(toast: $toast)
         .padding()
         .padding(.top, 20)
+        .preferredColorScheme(colorScheme)
     }
 }
 
