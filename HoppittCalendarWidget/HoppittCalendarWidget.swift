@@ -77,11 +77,11 @@ struct HoppittCalendarWidgetEntryView : View {
                     .textCase(.uppercase)
                     .bold()
                     .padding(.bottom, 1)
+                    .frame(maxWidth: .infinity, alignment: .center)
                 
                 VStack(alignment: .leading, spacing: 5) {
                     if (entry.events.isEmpty) {
                         Text("No events today")
-                            .padding(.leading, 10)
                     } else {
                         ForEach(entry.events, id: \.id) { event in
                             if (Calendar.current.isDate(event.date, equalTo: entry.date, toGranularity: .day)) {
