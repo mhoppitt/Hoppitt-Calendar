@@ -178,7 +178,7 @@ public class CalendarEventsTable {
     
     func cleanupTable(events: [CalendarEvent]) async throws {
         for event in events {
-            if event.date < DateService().getCurrentWeek()[0] {
+            if event.date < DateService().getFortnightFromToday()[0] {
                 try await deleteEvent(event: event)
             }
         }

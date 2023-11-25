@@ -62,7 +62,7 @@ struct CalendarPageView: View {
         }
         .task(id: refreshed) {
             await model.fetchEvents()
-            dateList = DateService().getCurrentWeek()
+            dateList = DateService().getFortnightFromToday()
             showingSpinner = false
         }
         .overlay(
