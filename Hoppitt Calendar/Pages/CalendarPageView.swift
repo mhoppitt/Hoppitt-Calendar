@@ -39,49 +39,46 @@ struct CalendarPageView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 0) {
+        VStack(spacing: 0) {
+            HStack() {
+                Text("")
+                    .frame(width: 40) // element with equal width of button to centre heading
+                    .padding(.leading)
+                Spacer()
                 Text("Calendar")
                     .font(.title)
                     .bold()
+                Spacer()
+                Button(action: {
+                    showingSheet.toggle()
+                }) {
+                    Image(systemName: "plus.circle.fill")
+                        .resizable()
+                        .frame(width: 35, height: 35)
+                        .padding(.trailing)
+                }
+                .sheet(isPresented: $showingSheet, onDismiss: {
+                    refreshView()
+                }) {
+                    AddEventSheetView(type: "Add")
+                }
+            }.padding(.bottom, 10)
+            ScrollView {
                 ForEach(dateList, id: \.hashValue) { date in
                     CalendarView(events: model.events ?? [], date: date, refreshed: $refreshed)
                 }
             }
-            .overlay(
-                HStack {
-                    Divider()
-                        .frame(width: 1)
-                        .overlay(.gray)
-                        .offset(x: -100)
-                }
-            )
-        }
-        .refreshable {
-            refreshView()
-        }
-        .task(id: refreshed) {
-            await model.fetchEvents()
-            dateList = DateService().getFortnightFromToday()
-            showingSpinner = false
+            .refreshable {
+                refreshView()
+            }
+            .task(id: refreshed) {
+                await model.fetchEvents()
+                dateList = DateService().getFortnightFromToday()
+                showingSpinner = false
+            }
         }
         .overlay(
             GeometryReader() { proxy in
-                ZStack {
-                    Button(action: {
-                        showingSheet.toggle()
-                    }) {
-                        Image(systemName: "plus.circle.fill")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                    }
-                    .sheet(isPresented: $showingSheet, onDismiss: {
-                        refreshView()
-                    }) {
-                        AddEventSheetView(type: "Add")
-                    }
-                }
-                .offset(x: proxy.size.width - 70, y: proxy.size.height - 70)
                 ZStack {
                     if (showingSpinner) {
                         ProgressView()

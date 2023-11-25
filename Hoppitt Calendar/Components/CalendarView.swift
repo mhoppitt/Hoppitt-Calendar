@@ -63,7 +63,6 @@ struct CalendarView: View {
                                 }
                             }
                         }
-                        .disabled(Calendar.current.startOfDay(for: date) < Calendar.current.startOfDay(for: Date()))
                         .padding(.leading, 2)
                         .foregroundStyle(colorScheme == .dark ? .white : .black)
                     }
