@@ -11,7 +11,7 @@ public class DateService {
     func getFortnightFromToday() -> [Date] {
         var week = [Date]()
         for i in 0...13 {
-            if let day = Calendar.current.date(byAdding: .day, value: i, to: Date()) {
+            if let day = Calendar.current.date(byAdding: .day, value: i, to: Calendar.current.startOfDay(for: Date())) {
                 week += [day]
             }
         }
