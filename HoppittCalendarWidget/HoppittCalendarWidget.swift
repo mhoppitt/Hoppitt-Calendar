@@ -65,27 +65,20 @@ struct HoppittCalendarWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        HStack {
+        VStack() {
             do {
                 let calendarDate = Calendar.current.dateComponents([.day, .year, .month, .weekday], from: entry.date)
-                let day = DateFormatter().weekdaySymbols[(calendarDate.weekday ?? 1) - 1].prefix(3)
+                let day = DateFormatter().weekdaySymbols[(calendarDate.weekday ?? 1) - 1]
                 let dateNum = calendarDate.day ?? 1
                 let month = DateFormatter().monthSymbols[(calendarDate.month ?? 1) - 1].prefix(3)
                 
-                VStack(alignment: .leading) {
-                    HStack() {
-                        Text(dateNum.formatted())
-                            .bold()
-                        Text(day)
-                            .textCase(.uppercase)
-                    }
-                    .font(.system(size: 18))
-                    .frame(alignment: .leading)
-                    Text(month)
-                        .textCase(.uppercase)
-                        .font(.system(size: 16))
-                }
-                VStack(alignment: .leading) {
+                Text("\(String(day)) \(dateNum.formatted()) \(String(month))")
+                    .font(.title3)
+                    .textCase(.uppercase)
+                    .bold()
+                    .padding(.bottom, 1)
+                
+                VStack(alignment: .leading, spacing: 5) {
                     if (entry.events.isEmpty) {
                         Text("No events today")
                             .padding(.leading, 10)
@@ -108,8 +101,8 @@ struct HoppittCalendarWidgetEntryView : View {
                                             .multilineTextAlignment(.leading)
                                         Text(event.date.formatted(date: .omitted, time: .shortened))
                                             .textCase(.uppercase)
-                                            .font(.system(size: 14))
-                                            .frame(maxWidth: 80, alignment: .trailing)
+                                            .font(.system(size: 16))
+                                            .frame(maxWidth: 70, alignment: .trailing)
                                     }
                                 }
                             }
@@ -117,8 +110,8 @@ struct HoppittCalendarWidgetEntryView : View {
                     }
                 }
             }
-            Spacer()
         }
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
     }
 }
 
@@ -144,5 +137,5 @@ struct HoppittCalendarWidget: Widget {
 #Preview(as: .systemMedium) {
     HoppittCalendarWidget()
 } timeline: {
-    CalendarWidgetEntry(date: Date(), events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh", date: Date(), who: "Matt and Benji", isKeyDate: false)])
+    CalendarWidgetEntry(date: Date(), events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh ghd jj", date: Date(), who: "Matt and Benji", isKeyDate: false)])
 }

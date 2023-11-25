@@ -17,25 +17,20 @@ struct CalendarView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
-        HStack {
+        VStack(spacing: 0) {
             do {
                 let calendarDate = Calendar.current.dateComponents([.day, .year, .month, .weekday], from: date)
-                let day = DateFormatter().weekdaySymbols[(calendarDate.weekday ?? 1) - 1].prefix(3)
+                let day = DateFormatter().weekdaySymbols[(calendarDate.weekday ?? 1) - 1]
                 let dateNum = calendarDate.day ?? 1
                 let month = DateFormatter().monthSymbols[(calendarDate.month ?? 1) - 1].prefix(3)
                 
-                VStack(alignment: .leading) {
-                    HStack() {
-                        Text(dateNum.formatted())
-                            .bold()
-                        Text(day)
-                            .textCase(.uppercase)
-                    }
-                    .font(.system(size: 22))
-                    .frame(width: 90, alignment: .leading)
-                    Text(month)
-                        .textCase(.uppercase)
-                }
+                Text("\(String(day)) \(dateNum.formatted()) \(String(month))")
+                    .font(.system(size: 18))
+                    .textCase(.uppercase)
+                    .bold()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading)
+                
                 VStack(alignment: .leading) {
                     ForEach(events, id: \.id) { event in
                         Button(action: {
@@ -63,7 +58,6 @@ struct CalendarView: View {
                                 }
                             }
                         }
-                        .padding(.leading, 2)
                         .foregroundStyle(colorScheme == .dark ? .white : .black)
                     }
                     .sheet(item: $isPresentingEvent, onDismiss: {
@@ -72,14 +66,15 @@ struct CalendarView: View {
                         AddEventSheetView(type: "Edit", eventId: event.id, eventTitle: event.title, eventDate: event.date, eventWho: event.who, isKeyDate: event.isKeyDate)
                     }
                 }
+                .padding(.top, 5)
+                .padding(.leading)
+                .padding(.trailing)
             }
-            Spacer()
+            Divider()
+                .overlay(.gray)
+                .padding(.top, 20)
         }
-        .padding()
-        .opacity(Calendar.current.startOfDay(for: date) < Calendar.current.startOfDay(for: Date()) ? 0.3 : 1.0)
-        Divider()
-            .overlay(.gray)
-            .opacity(0.5)
+        .padding(.bottom)
     }
 }
 
