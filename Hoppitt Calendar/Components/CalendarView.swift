@@ -37,7 +37,7 @@ struct CalendarView: View {
                             isPresentingEvent = event
                             showingSheet.toggle()
                         }) {
-                            if (Calendar.current.isDate(event.date, equalTo: date, toGranularity: .day)) {
+                            if (Calendar.current.isDate(event.startDate, equalTo: date, toGranularity: .day) || Calendar.current.isDate(event.endDate, equalTo: date, toGranularity: .day) || ((event.startDate ... event.endDate).contains(date))) {
                                 HStack(spacing: 5) {
                                     if (event.who == "Matt and Benji") {
                                         HStack(spacing: 0) {
@@ -51,9 +51,50 @@ struct CalendarView: View {
                                         Text(event.title)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .multilineTextAlignment(.leading)
-                                        Text(event.date.formatted(date: .omitted, time: .shortened))
-                                            .textCase(.uppercase)
-                                            .frame(maxWidth: 80, alignment: .trailing)
+                                        // One date and one time
+                                        if (!event.hasEndDate && Calendar.current.isDate(event.startDate, equalTo: date, toGranularity: .day)) {
+                                            Text(event.startDate.formatted(date: .omitted, time: .shortened))
+                                                .font(.system(size: 15))
+                                                .frame(alignment: .trailing)
+                                                .padding(.leading, 5)
+                                        }
+                                        // One date and two times
+                                        else if (event.hasEndDate && Calendar.current.isDate(event.startDate, equalTo: event.endDate, toGranularity: .day) &&  Calendar.current.isDate(event.endDate, equalTo: date, toGranularity: .day)) {
+                                            VStack(spacing: 0) {
+                                                Text(event.startDate.formatted(date: .omitted, time: .shortened))
+                                                    .font(.system(size: 15))
+                                                    .frame(alignment: .trailing)
+                                                    .padding(.leading, 5)
+                                                Text(event.endDate.formatted(date: .omitted, time: .shortened))
+                                                    .font(.system(size: 15))
+                                                    .frame(alignment: .trailing)
+                                                    .padding(.leading, 5)
+                                            }
+                                        }
+                                        // Two separate dates
+                                        else {
+                                            // Start date
+                                            if (Calendar.current.isDate(event.startDate, equalTo: date, toGranularity: .day)) {
+                                                Text("Starts \(event.startDate.formatted(date: .omitted, time: .shortened))")
+                                                    .font(.system(size: 15))
+                                                    .frame(alignment: .trailing)
+                                                    .padding(.leading, 5)
+                                            }
+                                            // End date
+                                            else if (Calendar.current.isDate(event.endDate, equalTo: date, toGranularity: .day)) {
+                                                Text("Ends \(event.endDate.formatted(date: .omitted, time: .shortened))")
+                                                    .font(.system(size: 15))
+                                                    .frame(alignment: .trailing)
+                                                    .padding(.leading, 5)
+                                            }
+                                            // Middle date
+                                            else {
+                                                Text("all-day")
+                                                    .font(.system(size: 15))
+                                                    .frame(alignment: .trailing)
+                                                    .padding(.leading, 5)
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -63,7 +104,7 @@ struct CalendarView: View {
                     .sheet(item: $isPresentingEvent, onDismiss: {
                         self.refreshed.toggle()
                     }) { event in
-                        AddEventSheetView(type: "Edit", eventId: event.id, eventTitle: event.title, eventDate: event.date, eventWho: event.who, isKeyDate: event.isKeyDate)
+                        AddEventSheetView(type: "Edit", eventId: event.id, eventTitle: event.title, hasEndDate: event.hasEndDate, eventStartDate: event.startDate, eventEndDate: event.endDate, eventWho: event.who, isKeyDate: event.isKeyDate)
                     }
                 }
                 .padding(.top, 5)
@@ -80,7 +121,7 @@ struct CalendarView: View {
 
 struct CalendarView_Preview: PreviewProvider {
   static var previews: some View {
-      CalendarView(events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh", date: Date(), who: "Matt and Benji", isKeyDate: false)], date: Date(), refreshed: .constant(true))
+      CalendarView(events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", hasEndDate: false, startDate: Date(), endDate: Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh", hasEndDate: false, startDate: Date(), endDate: Date(), who: "Matt and Benji", isKeyDate: false)], date: Date(), refreshed: .constant(true))
   }
 }
 

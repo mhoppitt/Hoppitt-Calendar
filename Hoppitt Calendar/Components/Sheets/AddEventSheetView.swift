@@ -19,7 +19,9 @@ struct AddEventSheetView: View {
     @State private var toast: Toast? = nil
     @State var eventId: String = ""
     @State var eventTitle: String = ""
-    @State var eventDate: Date = Date()
+    @State var hasEndDate: Bool = false
+    @State var eventStartDate: Date = Date()
+    @State var eventEndDate: Date = Date()
     @State var eventWho = "Matt"
     @State var isKeyDate: Bool = false
     
@@ -51,10 +53,10 @@ struct AddEventSheetView: View {
                     Task {
                         do {
                             if (type == "Add") {
-                                let event: CalendarEvent = CalendarEvent(id: eventsTable.generateID(), title: eventTitle, date: eventDate, who: eventWho, isKeyDate: isKeyDate)
+                                let event: CalendarEvent = CalendarEvent(id: eventsTable.generateID(), title: eventTitle, hasEndDate: hasEndDate, startDate: eventStartDate, endDate: eventEndDate, who: eventWho, isKeyDate: isKeyDate)
                                 try await eventsTable.addEvent(event: event)
                             } else {
-                                let event: CalendarEvent = CalendarEvent(id: eventId, title: eventTitle, date: eventDate, who: eventWho, isKeyDate: isKeyDate)
+                                let event: CalendarEvent = CalendarEvent(id: eventId, title: eventTitle, hasEndDate: hasEndDate, startDate: eventStartDate, endDate: eventEndDate, who: eventWho, isKeyDate: isKeyDate)
                                 try await eventsTable.editEvent(event: event)
                             }
                             dismiss()
@@ -95,6 +97,17 @@ struct AddEventSheetView: View {
                     }
                 }
                 Section() {
+                    Toggle("Show End Date", isOn: $hasEndDate)
+                        .onChange(of: hasEndDate) {
+                            showsStartsDateTimePicker = false
+                            showsStartsDatePicker = false
+                            showsEndsDateTimePicker = false
+                            showsEndsDatePicker = false
+                            
+                            if (!hasEndDate) {
+                                eventEndDate = eventStartDate
+                            }
+                        }
                     HStack {
                         Text("Starts")
                         Spacer()
@@ -106,7 +119,7 @@ struct AddEventSheetView: View {
                                 showsStartsDatePicker.toggle()
                             }
                         }) {
-                            Text(eventDate.formatted(date: .abbreviated, time: .omitted))
+                            Text(eventStartDate.formatted(date: .abbreviated, time: .omitted))
                         }
                         .buttonStyle(.bordered)
                         .foregroundColor(showsStartsDatePicker ? .red : colorScheme == .dark ? .white : .black)
@@ -118,68 +131,82 @@ struct AddEventSheetView: View {
                                 showsStartsDateTimePicker.toggle()
                             }
                         }) {
-                            Text(eventDate.formatted(date: .omitted, time: .shortened))
+                            Text(eventStartDate.formatted(date: .omitted, time: .shortened))
                         }
                         .buttonStyle(.bordered)
                         .foregroundColor(showsStartsDateTimePicker ? .red : colorScheme == .dark ? .white : .black)
                     }
                     if (showsStartsDatePicker) {
                         DatePicker("Starts",
-                                   selection: $eventDate,
-                                   displayedComponents: [.date]
+                            selection: $eventStartDate,
+                            displayedComponents: [.date]
                         )
                         .datePickerStyle(.graphical)
+                        .onChange(of: eventStartDate) {
+                            if (!hasEndDate || eventStartDate == eventEndDate || eventStartDate > eventEndDate) {
+                                eventEndDate = eventStartDate
+                            }
+                        }
                     }
                     if (showsStartsDateTimePicker) {
                         DatePicker("Starts",
-                                   selection: $eventDate,
-                                   displayedComponents: [.hourAndMinute]
+                            selection: $eventStartDate,
+                            displayedComponents: [.hourAndMinute]
                         )
                         .datePickerStyle(.wheel)
                         .labelsHidden()
-                    }
-                    HStack {
-                        Text("Ends")
-                        Spacer()
-                        Button(action: {
-                            withAnimation {
-                                showsStartsDateTimePicker = false
-                                showsStartsDatePicker = false
-                                showsEndsDateTimePicker = false
-                                showsEndsDatePicker.toggle()
+                        .onChange(of: eventStartDate) {
+                            if (!hasEndDate || eventStartDate == eventEndDate || eventStartDate > eventEndDate) {
+                                eventEndDate = eventStartDate
                             }
-                        }) {
-                            Text(eventDate.formatted(date: .abbreviated, time: .omitted))
                         }
-                        .buttonStyle(.bordered)
-                        .foregroundColor(showsEndsDatePicker ? .red : colorScheme == .dark ? .white : .black)
-                        Button(action: {
-                            withAnimation {
-                                showsStartsDateTimePicker = false
-                                showsStartsDatePicker = false
-                                showsEndsDatePicker = false
-                                showsEndsDateTimePicker.toggle()
+                    }
+                    if (hasEndDate) {
+                        HStack {
+                            Text("Ends")
+                            Spacer()
+                            Button(action: {
+                                withAnimation {
+                                    showsStartsDateTimePicker = false
+                                    showsStartsDatePicker = false
+                                    showsEndsDateTimePicker = false
+                                    showsEndsDatePicker.toggle()
+                                }
+                            }) {
+                                Text(eventEndDate.formatted(date: .abbreviated, time: .omitted))
                             }
-                        }) {
-                            Text(eventDate.formatted(date: .omitted, time: .shortened))
+                            .buttonStyle(.bordered)
+                            .foregroundColor(showsEndsDatePicker ? .red : colorScheme == .dark ? .white : .black)
+                            Button(action: {
+                                withAnimation {
+                                    showsStartsDateTimePicker = false
+                                    showsStartsDatePicker = false
+                                    showsEndsDatePicker = false
+                                    showsEndsDateTimePicker.toggle()
+                                }
+                            }) {
+                                Text(eventEndDate.formatted(date: .omitted, time: .shortened))
+                            }
+                            .buttonStyle(.bordered)
+                            .foregroundColor(showsEndsDateTimePicker ? .red : colorScheme == .dark ? .white : .black)
                         }
-                        .buttonStyle(.bordered)
-                        .foregroundColor(showsEndsDateTimePicker ? .red : colorScheme == .dark ? .white : .black)
-                    }
-                    if (showsEndsDatePicker) {
-                        DatePicker("Ends",
-                                   selection: $eventDate,
-                                   displayedComponents: [.date]
-                        )
-                        .datePickerStyle(.graphical)
-                    }
-                    if (showsEndsDateTimePicker) {
-                        DatePicker("Ends",
-                                   selection: $eventDate,
-                                   displayedComponents: [.hourAndMinute]
-                        )
-                        .datePickerStyle(.wheel)
-                        .labelsHidden()
+                        if (showsEndsDatePicker) {
+                            DatePicker("Ends",
+                                selection: $eventEndDate,
+                                in: eventStartDate...,
+                                displayedComponents: [.date]
+                            )
+                            .datePickerStyle(.graphical)
+                        }
+                        if (showsEndsDateTimePicker) {
+                            DatePicker("Ends",
+                                selection: $eventEndDate,
+                                in: eventStartDate...,
+                                displayedComponents: [.hourAndMinute]
+                            )
+                            .datePickerStyle(.wheel)
+                            .labelsHidden()
+                        }
                     }
                 }
                 Section() {
@@ -189,7 +216,7 @@ struct AddEventSheetView: View {
                     Button(action: {
                         Task {
                             do {
-                                let event: CalendarEvent = CalendarEvent(id: eventId, title: eventTitle, date: eventDate, who: eventWho, isKeyDate: isKeyDate)
+                                let event: CalendarEvent = CalendarEvent(id: eventId, title: eventTitle, hasEndDate: hasEndDate, startDate: eventStartDate, endDate: eventEndDate, who: eventWho, isKeyDate: isKeyDate)
                                 try await eventsTable.deleteEvent(event: event)
                                 dismiss()
                             } catch let error {
@@ -207,9 +234,6 @@ struct AddEventSheetView: View {
                 }
             }
             .padding(-16)
-            .onTapGesture {
-                self.focusedField = Optional.none
-            }
             Spacer()
         }
         .toastView(toast: $toast)

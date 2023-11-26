@@ -50,7 +50,7 @@ class EventsModel: ObservableObject {
         do {
             events = try await eventsTable.getEvents()
             for event in events.unsafelyUnwrapped {
-                if (Calendar.current.isDate(event.date, equalTo: Date(), toGranularity: .day)) {
+                if (Calendar.current.isDate(event.startDate, equalTo: Date(), toGranularity: .day) || Calendar.current.isDate(event.endDate, equalTo: Date(), toGranularity: .day) || ((event.startDate ... event.endDate).contains(Date()))) {
                     eventsToday.append(event)
                 }
             }
@@ -79,30 +79,68 @@ struct HoppittCalendarWidgetEntryView : View {
                     .padding(.bottom, 1)
                     .frame(maxWidth: .infinity, alignment: .center)
                 
-                VStack(alignment: .leading, spacing: 5) {
+                VStack(alignment: .leading, spacing: 2) {
                     if (entry.events.isEmpty) {
                         Text("No events today")
                     } else {
                         ForEach(entry.events, id: \.id) { event in
-                            if (Calendar.current.isDate(event.date, equalTo: entry.date, toGranularity: .day)) {
-                                HStack(spacing: 5) {
-                                    if (event.who == "Matt and Benji") {
-                                        HStack(spacing: 0) {
-                                            Image(systemName: "m.circle.fill")
-                                            Image(systemName: "b.circle.fill")
-                                        }
-                                    } else {
-                                        Image(systemName: "\(event.who.prefix(1).lowercased()).circle.fill")
-                                    }
+                            HStack(spacing: 5) {
+                                if (event.who == "Matt and Benji") {
                                     HStack(spacing: 0) {
-                                        Text(event.title)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                            .font(.system(size: 16))
-                                            .multilineTextAlignment(.leading)
-                                        Text(event.date.formatted(date: .omitted, time: .shortened))
-                                            .textCase(.uppercase)
-                                            .font(.system(size: 16))
-                                            .frame(maxWidth: 70, alignment: .trailing)
+                                        Image(systemName: "m.circle.fill")
+                                        Image(systemName: "b.circle.fill")
+                                    }
+                                } else {
+                                    Image(systemName: "\(event.who.prefix(1).lowercased()).circle.fill")
+                                }
+                                HStack(spacing: 0) {
+                                    Text(event.title)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .font(.system(size: 16))
+                                        .multilineTextAlignment(.leading)
+                                    // One date and one time
+                                    if (!event.hasEndDate && Calendar.current.isDate(event.startDate, equalTo: entry.date, toGranularity: .day)) {
+                                        Text(event.startDate.formatted(date: .omitted, time: .shortened))
+                                            .font(.system(size: 15))
+                                            .frame(alignment: .trailing)
+                                            .padding(.leading, 5)
+                                    }
+                                    // One date and two times
+                                    else if (event.hasEndDate && Calendar.current.isDate(event.startDate, equalTo: event.endDate, toGranularity: .day) &&  Calendar.current.isDate(event.endDate, equalTo: entry.date, toGranularity: .day)) {
+                                        VStack {
+                                            Text(event.startDate.formatted(date: .omitted, time: .shortened))
+                                                .font(.system(size: 15))
+                                                .frame(alignment: .trailing)
+                                                .padding(.leading, 5)
+                                            Text(event.endDate.formatted(date: .omitted, time: .shortened))
+                                                .font(.system(size: 15))
+                                                .frame(alignment: .trailing)
+                                                .padding(.leading, 5)
+                                        }
+                                    }
+                                    // Two separate dates
+                                    else {
+                                        // Start date
+                                        if (Calendar.current.isDate(event.startDate, equalTo: entry.date, toGranularity: .day)) {
+                                            Text("Starts \(event.startDate.formatted(date: .omitted, time: .shortened))")
+                                                .font(.system(size: 15))
+                                                .frame(alignment: .trailing)
+                                                .padding(.leading, 5)
+                                        }
+                                        // End date
+                                        else if (Calendar.current.isDate(event.endDate, equalTo: entry.date, toGranularity: .day)) {
+                                            Text("Ends \(event.endDate.formatted(date: .omitted, time: .shortened))")
+                                                .font(.system(size: 15))
+                                                .frame(alignment: .trailing)
+                                                .padding(.leading, 5)
+                                        }
+                                        // Middle date
+                                        else {
+                                            Text("all-day")
+                                                .font(.system(size: 15))
+                                                .frame(alignment: .trailing)
+                                                .padding(.leading, 5)
+                                        }
                                     }
                                 }
                             }
@@ -137,5 +175,5 @@ struct HoppittCalendarWidget: Widget {
 #Preview(as: .systemMedium) {
     HoppittCalendarWidget()
 } timeline: {
-    CalendarWidgetEntry(date: Date(), events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", date: Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh ghd jj", date: Date(), who: "Matt and Benji", isKeyDate: false)])
+    CalendarWidgetEntry(date: Date(), events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", hasEndDate: true, startDate: Date(), endDate: Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh ghd jj", hasEndDate: true, startDate: Date(), endDate: Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date(), who: "Matt and Benji", isKeyDate: false)])
 }

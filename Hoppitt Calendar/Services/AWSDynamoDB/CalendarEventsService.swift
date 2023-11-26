@@ -8,7 +8,7 @@
 import AWSDynamoDB
 
 public class CalendarEventsTable {
-    let tableName = "Hoppitt-Calendar-Events"
+    let tableName = "Hoppitt-Calendar-Events-Table"
     
     public init() {
         // Configure your AWS credentials and region
@@ -37,14 +37,25 @@ public class CalendarEventsTable {
         }
         title.s = event.title
         
-        guard let date = AWSDynamoDBAttributeValue() else {
-            return print("Error setting date")
+        guard let hasEndDate = AWSDynamoDBAttributeValue() else {
+            return print("Error setting isKeyDate")
+        }
+        hasEndDate.s = String(event.hasEndDate)
+        
+        guard let startDate = AWSDynamoDBAttributeValue() else {
+            return print("Error setting start date")
         }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss Z"
         dateFormatter.timeZone = TimeZone(abbreviation: TimeZone.current.identifier)
-        let dateString = dateFormatter.string(from: event.date)
-        date.s = dateString
+        let startDateString = dateFormatter.string(from: event.startDate)
+        startDate.s = startDateString
+        
+        guard let endDate = AWSDynamoDBAttributeValue() else {
+            return print("Error setting end date")
+        }
+        let endDateString = dateFormatter.string(from: event.endDate)
+        endDate.s = endDateString
         
         guard let who = AWSDynamoDBAttributeValue() else {
             return print("Error setting person")
@@ -59,7 +70,9 @@ public class CalendarEventsTable {
         input.item = [
             "id": id,
             "title": title,
-            "date": date,
+            "hasEndDate": hasEndDate,
+            "startDate": startDate,
+            "endDate": endDate,
             "who": who,
             "isKeyDate": isKeyDate,
         ]
@@ -79,23 +92,27 @@ public class CalendarEventsTable {
         
         var eventList: [CalendarEvent] = []
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss Z"
+        dateFormatter.timeZone = TimeZone(abbreviation: TimeZone.current.identifier)
+        
         for record in response.items.unsafelyUnwrapped {
             let id: String = record["id"]!.s.unsafelyUnwrapped
             let title: String = record["title"]!.s.unsafelyUnwrapped
-            let dateString: String = record["date"]!.s.unsafelyUnwrapped
+            let hasEndDate: String = record["hasEndDate"]!.s.unsafelyUnwrapped
+            let startDateString: String = record["startDate"]!.s.unsafelyUnwrapped
+            let endDateString: String = record["endDate"]!.s.unsafelyUnwrapped
             let who: String = record["who"]!.s.unsafelyUnwrapped
             let isKeyDate: String = record["isKeyDate"]!.s.unsafelyUnwrapped
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss Z"
-            dateFormatter.timeZone = TimeZone(abbreviation: TimeZone.current.identifier)
-            let date = dateFormatter.date(from: dateString) ?? Date()
+            let startDate = dateFormatter.date(from: startDateString) ?? Date()
+            let endDate = dateFormatter.date(from: endDateString) ?? Date()
             
-            let event = CalendarEvent(id: id, title: title, date: date, who: who, isKeyDate: Bool(isKeyDate) ?? false)
+            let event = CalendarEvent(id: id, title: title, hasEndDate: Bool(hasEndDate) ?? false, startDate: startDate, endDate: endDate, who: who, isKeyDate: Bool(isKeyDate) ?? false)
             eventList.append(event)
         }
         let sortedEventList = eventList.sorted {
-            $0.date < $1.date
+            $0.startDate < $1.startDate
         }
         return sortedEventList
     }
@@ -115,17 +132,34 @@ public class CalendarEventsTable {
         updatedTitle.value = title
         updatedTitle.action = AWSDynamoDBAttributeAction.put
         
-        guard let date = AWSDynamoDBAttributeValue() else {
-            return print("Error setting date")
+        guard let hasEndDate = AWSDynamoDBAttributeValue() else {
+            return print("Error setting hasEndDate")
+        }
+        hasEndDate.s = String(event.hasEndDate)
+        let updatedHasEndDate: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
+        updatedHasEndDate.value = hasEndDate
+        updatedHasEndDate.action = AWSDynamoDBAttributeAction.put
+        
+        guard let startDate = AWSDynamoDBAttributeValue() else {
+            return print("Error setting start date")
         }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss Z"
         dateFormatter.timeZone = TimeZone(abbreviation: TimeZone.current.identifier)
-        let dateString = dateFormatter.string(from: event.date)
-        date.s = dateString
-        let updatedDate: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
-        updatedDate.value = date
-        updatedDate.action = AWSDynamoDBAttributeAction.put
+        let startDateString = dateFormatter.string(from: event.startDate)
+        startDate.s = startDateString
+        let updatedStartDate: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
+        updatedStartDate.value = startDate
+        updatedStartDate.action = AWSDynamoDBAttributeAction.put
+        
+        guard let endDate = AWSDynamoDBAttributeValue() else {
+            return print("Error setting end date")
+        }
+        let endDateString = dateFormatter.string(from: event.endDate)
+        endDate.s = endDateString
+        let updatedEndDate: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
+        updatedEndDate.value = endDate
+        updatedEndDate.action = AWSDynamoDBAttributeAction.put
         
         guard let who = AWSDynamoDBAttributeValue() else {
             return print("Error setting person")
@@ -151,7 +185,9 @@ public class CalendarEventsTable {
         
         updatedInput.attributeUpdates = [
             "title": updatedTitle,
-            "date": updatedDate,
+            "hasEndDate": updatedHasEndDate,
+            "startDate": updatedStartDate,
+            "endDate": updatedEndDate,
             "who": updatedWho,
             "isKeyDate": updatedIsKeyDate,
         ]
@@ -178,7 +214,7 @@ public class CalendarEventsTable {
     
     func cleanupTable(events: [CalendarEvent]) async throws {
         for event in events {
-            if event.date < DateService().getFortnightFromToday()[0] {
+            if event.endDate < DateService().getFortnightFromToday()[0] {
                 try await deleteEvent(event: event)
             }
         }
