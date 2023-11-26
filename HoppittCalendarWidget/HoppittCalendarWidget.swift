@@ -96,12 +96,12 @@ struct HoppittCalendarWidgetEntryView : View {
                                 HStack(spacing: 0) {
                                     Text(event.title)
                                         .frame(maxWidth: .infinity, alignment: .leading)
-                                        .font(.system(size: 16))
+                                        .font(.system(size: 15))
                                         .multilineTextAlignment(.leading)
                                     // One date and one time
                                     if (!event.hasEndDate && Calendar.current.isDate(event.startDate, equalTo: entry.date, toGranularity: .day)) {
                                         Text(event.startDate.formatted(date: .omitted, time: .shortened))
-                                            .font(.system(size: 15))
+                                            .font(.system(size: 14))
                                             .frame(alignment: .trailing)
                                             .padding(.leading, 5)
                                     }
@@ -109,11 +109,11 @@ struct HoppittCalendarWidgetEntryView : View {
                                     else if (event.hasEndDate && Calendar.current.isDate(event.startDate, equalTo: event.endDate, toGranularity: .day) &&  Calendar.current.isDate(event.endDate, equalTo: entry.date, toGranularity: .day)) {
                                         VStack {
                                             Text(event.startDate.formatted(date: .omitted, time: .shortened))
-                                                .font(.system(size: 15))
+                                                .font(.system(size: 14))
                                                 .frame(alignment: .trailing)
                                                 .padding(.leading, 5)
                                             Text(event.endDate.formatted(date: .omitted, time: .shortened))
-                                                .font(.system(size: 15))
+                                                .font(.system(size: 14))
                                                 .frame(alignment: .trailing)
                                                 .padding(.leading, 5)
                                         }
@@ -123,21 +123,21 @@ struct HoppittCalendarWidgetEntryView : View {
                                         // Start date
                                         if (Calendar.current.isDate(event.startDate, equalTo: entry.date, toGranularity: .day)) {
                                             Text("Starts \(event.startDate.formatted(date: .omitted, time: .shortened))")
-                                                .font(.system(size: 15))
+                                                .font(.system(size: 14))
                                                 .frame(alignment: .trailing)
                                                 .padding(.leading, 5)
                                         }
                                         // End date
                                         else if (Calendar.current.isDate(event.endDate, equalTo: entry.date, toGranularity: .day)) {
                                             Text("Ends \(event.endDate.formatted(date: .omitted, time: .shortened))")
-                                                .font(.system(size: 15))
+                                                .font(.system(size: 14))
                                                 .frame(alignment: .trailing)
                                                 .padding(.leading, 5)
                                         }
                                         // Middle date
                                         else {
                                             Text("all-day")
-                                                .font(.system(size: 15))
+                                                .font(.system(size: 14))
                                                 .frame(alignment: .trailing)
                                                 .padding(.leading, 5)
                                         }
