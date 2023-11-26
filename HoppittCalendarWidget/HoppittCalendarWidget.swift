@@ -65,7 +65,7 @@ struct HoppittCalendarWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        VStack() {
+        VStack(spacing: 0) {
             do {
                 let calendarDate = Calendar.current.dateComponents([.day, .year, .month, .weekday], from: entry.date)
                 let day = DateFormatter().weekdaySymbols[(calendarDate.weekday ?? 1) - 1]
@@ -73,7 +73,7 @@ struct HoppittCalendarWidgetEntryView : View {
                 let month = DateFormatter().monthSymbols[(calendarDate.month ?? 1) - 1].prefix(3)
                 
                 Text("\(String(day)) \(dateNum.formatted()) \(String(month))")
-                    .font(.title3)
+                    .font(.system(size: 18))
                     .textCase(.uppercase)
                     .bold()
                     .padding(.bottom, 1)
