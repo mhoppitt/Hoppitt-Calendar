@@ -65,7 +65,7 @@ struct HoppittCalendarWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: 2) {
             do {
                 let calendarDate = Calendar.current.dateComponents([.day, .year, .month, .weekday], from: entry.date)
                 let day = DateFormatter().weekdaySymbols[(calendarDate.weekday ?? 1) - 1]
@@ -107,16 +107,10 @@ struct HoppittCalendarWidgetEntryView : View {
                                     }
                                     // One date and two times
                                     else if (event.hasEndDate && Calendar.current.isDate(event.startDate, equalTo: event.endDate, toGranularity: .day) &&  Calendar.current.isDate(event.endDate, equalTo: entry.date, toGranularity: .day)) {
-                                        VStack {
-                                            Text(event.startDate.formatted(date: .omitted, time: .shortened))
-                                                .font(.system(size: 14))
-                                                .frame(alignment: .trailing)
-                                                .padding(.leading, 5)
-                                            Text(event.endDate.formatted(date: .omitted, time: .shortened))
-                                                .font(.system(size: 14))
-                                                .frame(alignment: .trailing)
-                                                .padding(.leading, 5)
-                                        }
+                                        Text("\(event.startDate.formatted(date: .omitted, time: .shortened)) - \(event.endDate.formatted(date: .omitted, time: .shortened))")
+                                            .font(.system(size: 14))
+                                            .frame(alignment: .trailing)
+                                            .padding(.leading, 5)
                                     }
                                     // Two separate dates
                                     else {

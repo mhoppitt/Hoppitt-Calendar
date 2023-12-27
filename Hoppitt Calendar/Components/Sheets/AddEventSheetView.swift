@@ -97,7 +97,7 @@ struct AddEventSheetView: View {
                     }
                 }
                 Section() {
-                    Toggle("Show End Date", isOn: $hasEndDate)
+                    Toggle("Show End Date/Time", isOn: $hasEndDate)
                         .onChange(of: hasEndDate) {
                             showsStartsDateTimePicker = false
                             showsStartsDatePicker = false

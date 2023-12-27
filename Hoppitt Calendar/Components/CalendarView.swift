@@ -60,16 +60,10 @@ struct CalendarView: View {
                                         }
                                         // One date and two times
                                         else if (event.hasEndDate && Calendar.current.isDate(event.startDate, equalTo: event.endDate, toGranularity: .day) &&  Calendar.current.isDate(event.endDate, equalTo: date, toGranularity: .day)) {
-                                            VStack(spacing: 0) {
-                                                Text(event.startDate.formatted(date: .omitted, time: .shortened))
-                                                    .font(.system(size: 15))
-                                                    .frame(alignment: .trailing)
-                                                    .padding(.leading, 5)
-                                                Text(event.endDate.formatted(date: .omitted, time: .shortened))
-                                                    .font(.system(size: 15))
-                                                    .frame(alignment: .trailing)
-                                                    .padding(.leading, 5)
-                                            }
+                                            Text("\(event.startDate.formatted(date: .omitted, time: .shortened)) - \(event.endDate.formatted(date: .omitted, time: .shortened))")
+                                                .font(.system(size: 15))
+                                                .frame(alignment: .trailing)
+                                                .padding(.leading, 5)
                                         }
                                         // Two separate dates
                                         else {
@@ -121,7 +115,7 @@ struct CalendarView: View {
 
 struct CalendarView_Preview: PreviewProvider {
   static var previews: some View {
-      CalendarView(events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", hasEndDate: false, startDate: Date(), endDate: Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh", hasEndDate: false, startDate: Date(), endDate: Date(), who: "Matt and Benji", isKeyDate: false)], date: Date(), refreshed: .constant(true))
+      CalendarView(events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", hasEndDate: true, startDate: Date(), endDate: Calendar.current.date(byAdding: .hour, value: 5, to: Date()) ?? Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh", hasEndDate: false, startDate: Date(), endDate: Date(), who: "Matt and Benji", isKeyDate: false)], date: Date(), refreshed: .constant(true))
   }
 }
 
