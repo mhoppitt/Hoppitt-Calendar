@@ -15,14 +15,14 @@ struct AppLayout: View {
                     .tabItem {
                         Label("Calendar", systemImage: "calendar")
                     }
-                KeyDatesPageView()
+                KeyDatePageView()
                     .tabItem {
                         Label("Key Dates", systemImage: "calendar.badge.exclamationmark")
                     }
-                ToDoPageView()
-                    .tabItem {
-                        Label("To Do", systemImage: "checklist")
-                    }
+//                ToDoPageView()
+//                    .tabItem {
+//                        Label("To Do", systemImage: "checklist")
+//                    }
             }
             .toolbarBackground(Color.black, for: .tabBar)
             .toolbarBackground(.visible, for: .tabBar)

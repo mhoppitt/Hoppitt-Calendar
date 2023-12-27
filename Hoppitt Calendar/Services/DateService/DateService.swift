@@ -17,4 +17,14 @@ public class DateService {
         }
         return week
     }
+    
+    func getThreeMonthsFromToday() -> [Date] {
+        var threeMonths = [Date]()
+        for i in 0...2 {
+            if let month = Calendar.current.date(byAdding: .month, value: i, to: Calendar.current.startOfDay(for: Date())) {
+                threeMonths += [month]
+            }
+        }
+        return threeMonths
+    }
 }
