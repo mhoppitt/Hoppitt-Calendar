@@ -98,6 +98,9 @@ struct HoppittCalendarWidgetEntryView : View {
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .font(.system(size: 15))
                                         .multilineTextAlignment(.leading)
+                                    if (event.isOutForDinner) {
+                                        Image(systemName: "fork.knife.circle.fill")
+                                    }
                                     // One date and one time
                                     if (!event.hasEndDate && Calendar.current.isDate(event.startDate, equalTo: entry.date, toGranularity: .day)) {
                                         Text(event.startDate.formatted(date: .omitted, time: .shortened))
@@ -169,5 +172,5 @@ struct HoppittCalendarWidget: Widget {
 #Preview(as: .systemMedium) {
     HoppittCalendarWidget()
 } timeline: {
-    CalendarWidgetEntry(date: Date(), events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", hasEndDate: true, startDate: Date(), endDate: Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh ghd jj", hasEndDate: true, startDate: Date(), endDate: Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date(), who: "Matt and Benji", isKeyDate: false)])
+    CalendarWidgetEntry(date: Date(), events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", hasEndDate: true, startDate: Date(), endDate: Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? Date(), who: "Matt", isKeyDate: false, isOutForDinner: true), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh ghd jj", hasEndDate: true, startDate: Date(), endDate: Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date(), who: "Matt and Benji", isKeyDate: false, isOutForDinner: false)])
 }

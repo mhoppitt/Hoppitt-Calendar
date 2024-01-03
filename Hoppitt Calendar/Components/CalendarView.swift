@@ -51,6 +51,9 @@ struct CalendarView: View {
                                         Text(event.title)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .multilineTextAlignment(.leading)
+                                        if (event.isOutForDinner) {
+                                            Image(systemName: "fork.knife.circle.fill")
+                                        }
                                         // One date and one time
                                         if (!event.hasEndDate && Calendar.current.isDate(event.startDate, equalTo: date, toGranularity: .day)) {
                                             Text(event.startDate.formatted(date: .omitted, time: .shortened))
@@ -98,7 +101,7 @@ struct CalendarView: View {
                     .sheet(item: $isPresentingEvent, onDismiss: {
                         self.refreshed.toggle()
                     }) { event in
-                        AddEventSheetView(type: "Edit", eventId: event.id, eventTitle: event.title, hasEndDate: event.hasEndDate, eventStartDate: event.startDate, eventEndDate: event.endDate, eventWho: event.who, isKeyDate: event.isKeyDate)
+                        AddEventSheetView(type: "Edit", eventId: event.id, eventTitle: event.title, hasEndDate: event.hasEndDate, eventStartDate: event.startDate, eventEndDate: event.endDate, eventWho: event.who, isKeyDate: event.isKeyDate, isOutForDinner: event.isOutForDinner)
                     }
                 }
                 .padding(.top, 5)
@@ -115,7 +118,7 @@ struct CalendarView: View {
 
 struct CalendarView_Preview: PreviewProvider {
   static var previews: some View {
-      CalendarView(events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", hasEndDate: true, startDate: Date(), endDate: Calendar.current.date(byAdding: .hour, value: 5, to: Date()) ?? Date(), who: "Matt", isKeyDate: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh", hasEndDate: false, startDate: Date(), endDate: Date(), who: "Matt and Benji", isKeyDate: false)], date: Date(), refreshed: .constant(true))
+      CalendarView(events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", hasEndDate: true, startDate: Date(), endDate: Calendar.current.date(byAdding: .hour, value: 5, to: Date()) ?? Date(), who: "Matt", isKeyDate: false, isOutForDinner: true), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh", hasEndDate: false, startDate: Date(), endDate: Date(), who: "Matt and Benji", isKeyDate: false, isOutForDinner: false)], date: Date(), refreshed: .constant(true))
   }
 }
 

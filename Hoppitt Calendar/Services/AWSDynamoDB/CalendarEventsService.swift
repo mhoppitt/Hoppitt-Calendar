@@ -8,7 +8,7 @@
 import AWSDynamoDB
 
 public class CalendarEventsTable {
-    let tableName = "Hoppitt-Calendar-Events-Table"
+    let tableName = "Hoppitt-Calendar-Events"
     
     public init() {
         // Configure your AWS credentials and region
@@ -67,6 +67,11 @@ public class CalendarEventsTable {
         }
         isKeyDate.s = String(event.isKeyDate)
         
+        guard let isOutForDinner = AWSDynamoDBAttributeValue() else {
+            return print("Error setting isOutForDinner")
+        }
+        isOutForDinner.s = String(event.isOutForDinner)
+        
         input.item = [
             "id": id,
             "title": title,
@@ -75,6 +80,7 @@ public class CalendarEventsTable {
             "endDate": endDate,
             "who": who,
             "isKeyDate": isKeyDate,
+            "isOutForDinner": isOutForDinner,
         ]
 
         try await dynamoDB.putItem(input)
@@ -104,11 +110,12 @@ public class CalendarEventsTable {
             let endDateString: String = record["endDate"]!.s.unsafelyUnwrapped
             let who: String = record["who"]!.s.unsafelyUnwrapped
             let isKeyDate: String = record["isKeyDate"]!.s.unsafelyUnwrapped
+            let isOutForDinner: String = record["isOutForDinner"]!.s.unsafelyUnwrapped
             
             let startDate = dateFormatter.date(from: startDateString) ?? Date()
             let endDate = dateFormatter.date(from: endDateString) ?? Date()
             
-            let event = CalendarEvent(id: id, title: title, hasEndDate: Bool(hasEndDate) ?? false, startDate: startDate, endDate: endDate, who: who, isKeyDate: Bool(isKeyDate) ?? false)
+            let event = CalendarEvent(id: id, title: title, hasEndDate: Bool(hasEndDate) ?? false, startDate: startDate, endDate: endDate, who: who, isKeyDate: Bool(isKeyDate) ?? false, isOutForDinner: Bool(isOutForDinner) ?? false)
             eventList.append(event)
         }
         let sortedEventList = eventList.sorted {
@@ -177,6 +184,14 @@ public class CalendarEventsTable {
         updatedIsKeyDate.value = isKeyDate
         updatedIsKeyDate.action = AWSDynamoDBAttributeAction.put
         
+        guard let isOutForDinner = AWSDynamoDBAttributeValue() else {
+            return print("Error setting isOutForDinner")
+        }
+        isOutForDinner.s = String(event.isOutForDinner)
+        let updatedIsOutForDinner: AWSDynamoDBAttributeValueUpdate = AWSDynamoDBAttributeValueUpdate()
+        updatedIsOutForDinner.value = isOutForDinner
+        updatedIsOutForDinner.action = AWSDynamoDBAttributeAction.put
+        
         guard let updatedInput = AWSDynamoDBUpdateItemInput() else {
             return print("Error setting tableName")
         }
@@ -190,6 +205,7 @@ public class CalendarEventsTable {
             "endDate": updatedEndDate,
             "who": updatedWho,
             "isKeyDate": updatedIsKeyDate,
+            "isOutForDinner": updatedIsOutForDinner,
         ]
         updatedInput.returnValues = AWSDynamoDBReturnValue.updatedNew
 

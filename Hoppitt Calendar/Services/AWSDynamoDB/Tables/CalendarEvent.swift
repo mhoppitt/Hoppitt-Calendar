@@ -15,8 +15,9 @@ public struct CalendarEvent: Codable, Identifiable {
     var endDate: Date
     var who: String
     var isKeyDate: Bool
+    var isOutForDinner: Bool
     
-    init(id: String, title: String, hasEndDate: Bool, startDate: Date, endDate: Date, who: String, isKeyDate: Bool) {
+    init(id: String, title: String, hasEndDate: Bool, startDate: Date, endDate: Date, who: String, isKeyDate: Bool, isOutForDinner: Bool) {
         self.id = id
         self.title = title
         self.hasEndDate = hasEndDate
@@ -24,5 +25,6 @@ public struct CalendarEvent: Codable, Identifiable {
         self.endDate = endDate
         self.who = who
         self.isKeyDate = isKeyDate
+        self.isOutForDinner = isOutForDinner
     }
 }

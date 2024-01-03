@@ -24,6 +24,7 @@ struct AddEventSheetView: View {
     @State var eventEndDate: Date = Date()
     @State var eventWho = "Matt"
     @State var isKeyDate: Bool = false
+    @State var isOutForDinner: Bool = false
     
     @State var showsStartsDatePicker = false
     @State var showsStartsDateTimePicker = false
@@ -53,10 +54,10 @@ struct AddEventSheetView: View {
                     Task {
                         do {
                             if (type == "Add") {
-                                let event: CalendarEvent = CalendarEvent(id: eventsTable.generateID(), title: eventTitle, hasEndDate: hasEndDate, startDate: eventStartDate, endDate: eventEndDate, who: eventWho, isKeyDate: isKeyDate)
+                                let event: CalendarEvent = CalendarEvent(id: eventsTable.generateID(), title: eventTitle, hasEndDate: hasEndDate, startDate: eventStartDate, endDate: eventEndDate, who: eventWho, isKeyDate: isKeyDate, isOutForDinner: isOutForDinner)
                                 try await eventsTable.addEvent(event: event)
                             } else {
-                                let event: CalendarEvent = CalendarEvent(id: eventId, title: eventTitle, hasEndDate: hasEndDate, startDate: eventStartDate, endDate: eventEndDate, who: eventWho, isKeyDate: isKeyDate)
+                                let event: CalendarEvent = CalendarEvent(id: eventId, title: eventTitle, hasEndDate: hasEndDate, startDate: eventStartDate, endDate: eventEndDate, who: eventWho, isKeyDate: isKeyDate, isOutForDinner: isOutForDinner)
                                 try await eventsTable.editEvent(event: event)
                             }
                             dismiss()
@@ -211,12 +212,13 @@ struct AddEventSheetView: View {
                 }
                 Section() {
                     Toggle("Key Date", isOn: $isKeyDate)
+                    Toggle("Out for Dinner", isOn: $isOutForDinner)
                 }
                 if (type == "Edit") {
                     Button(action: {
                         Task {
                             do {
-                                let event: CalendarEvent = CalendarEvent(id: eventId, title: eventTitle, hasEndDate: hasEndDate, startDate: eventStartDate, endDate: eventEndDate, who: eventWho, isKeyDate: isKeyDate)
+                                let event: CalendarEvent = CalendarEvent(id: eventId, title: eventTitle, hasEndDate: hasEndDate, startDate: eventStartDate, endDate: eventEndDate, who: eventWho, isKeyDate: isKeyDate, isOutForDinner: isOutForDinner)
                                 try await eventsTable.deleteEvent(event: event)
                                 dismiss()
                             } catch let error {

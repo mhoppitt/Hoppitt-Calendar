@@ -98,7 +98,7 @@ struct KeyDateView: View {
 
 struct KeyDateView_Preview: PreviewProvider {
   static var previews: some View {
-      KeyDateView(events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", hasEndDate: true, startDate: Date(), endDate: Calendar.current.date(byAdding: .day, value: 5, to: Date()) ?? Date(), who: "Matt", isKeyDate: true), CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DL", title: "test", hasEndDate: true, startDate: Date(), endDate: Calendar.current.date(byAdding: .day, value: 3, to: Date()) ?? Date(), who: "Matt", isKeyDate: true), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh", hasEndDate: false, startDate: Date(), endDate: Date(), who: "Matt and Benji", isKeyDate: true)], date: Date(), refreshed: .constant(true))
+      KeyDateView(events: [CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DC", title: "test event", hasEndDate: true, startDate: Date(), endDate: Calendar.current.date(byAdding: .day, value: 5, to: Date()) ?? Date(), who: "Matt", isKeyDate: true, isOutForDinner: true), CalendarEvent(id: "15CEC567-004E-4809-88E7-E30EDCB6A7DL", title: "test", hasEndDate: true, startDate: Date(), endDate: Calendar.current.date(byAdding: .day, value: 3, to: Date()) ?? Date(), who: "Matt", isKeyDate: true, isOutForDinner: false), CalendarEvent(id: "15CEC560-004E-4809-88E7-E30EDCB6A7DC", title: "test event dhs shsc hh", hasEndDate: false, startDate: Date(), endDate: Date(), who: "Matt and Benji", isKeyDate: true, isOutForDinner: true)], date: Date(), refreshed: .constant(true))
   }
 }
 
