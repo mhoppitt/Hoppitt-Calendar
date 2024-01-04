@@ -6,6 +6,7 @@
 //
 
 import AWSDynamoDB
+import AWSSNS
 
 public class CalendarEventsTable {
     let tableName = "Hoppitt-Calendar-Events"
@@ -240,31 +241,39 @@ public class CalendarEventsTable {
     }
     
     func sendEventNotification(event: CalendarEvent, eventAction: String) {
-        let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.requestAuthorization(options: [.alert, .badge]) { granted, error in
-            guard granted else { return }
-            
-            // Configure the content of the notification
-            let content = UNMutableNotificationContent()
-            let eventDay = event.startDate.formatted(date: .abbreviated, time: .omitted).components(separatedBy: " ")[0]
-            let eventMonth = event.startDate.formatted(date: .abbreviated, time: .omitted).components(separatedBy: " ")[1]
-            
-            content.title = "Event for \(event.who) on \(eventDay) \(eventMonth) \(eventAction)"
-            content.body = "\(event.title) starting at \(event.startDate.formatted(date: .omitted, time: .shortened))"
-            
-            // Configure the trigger
-            let timeInterval = 0.1
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(timeInterval), repeats: false)
-            
-            // Create the notification request
-            let id = "eventAddedNotification"
-            let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
-            
-            // Schedule the notification
-            let notificationCenter = UNUserNotificationCenter.current()
-            notificationCenter.add(request) { error in
-                if let error = error {
-                    print("Not able to add notification: \(error.localizedDescription)")
+        for (SNSEndpointARN, SNSEndpointToken) in SNS_DICT {
+            let deviceArn = SNSEndpointARN
+            let deviceTokenSNS = SNSEndpointToken
+            if (!deviceArn.isEmpty && !deviceTokenSNS.isEmpty) {
+                // Push notification meant for the spreebie uploader
+                let sns = AWSSNS.default()
+                let request = AWSSNSPublishInput()
+                
+                request?.messageStructure = "json"
+                
+                // The payload
+                let eventDay = event.startDate.formatted(date: .abbreviated, time: .omitted).components(separatedBy: " ")[0]
+                let eventMonth = event.startDate.formatted(date: .abbreviated, time: .omitted).components(separatedBy: " ")[1]
+                let dict = [
+                    "default": "New message from HoppittCalendar.",
+                    "APNS_SANDBOX": "{\"aps\":{\"alert\": {\"title\":\"Event for \(event.who) on \(eventDay) \(eventMonth) \(eventAction)\",\"body\":\"\(event.title) starting at \(event.startDate.formatted(date: .omitted, time: .shortened))\"}} }"
+                ]
+                
+                do {
+                    let jsonData = try JSONSerialization.data(withJSONObject: dict, options: JSONSerialization.WritingOptions.prettyPrinted)
+                    request?.message = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) as? String
+                    
+                    request?.targetArn = deviceArn
+                    
+                    sns.publish(request!).continueWith {
+                        (task) -> AnyObject? in
+                        if task.error != nil {
+                            print("Error sending mesage: \(String(describing: task.error))")
+                        }
+                        return nil
+                    }
+                } catch {
+                    print(error)
                 }
             }
         }
