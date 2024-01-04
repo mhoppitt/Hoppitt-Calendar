@@ -240,7 +240,7 @@ struct AddEventSheetView: View {
         }
         .toastView(toast: $toast)
         .padding()
-        .padding(.top, 20)
+        .padding(.top, 10)
         .background(colorScheme == .dark ? SwiftUI.Color.init(red: 0.11, green: 0.11, blue: 0.11) : SwiftUI.Color.init(red: 0.95, green: 0.95, blue: 0.97))
         .preferredColorScheme(colorScheme)
     }

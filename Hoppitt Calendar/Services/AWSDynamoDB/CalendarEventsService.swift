@@ -84,6 +84,7 @@ public class CalendarEventsTable {
         ]
 
         try await dynamoDB.putItem(input)
+        sendEventNotification(event: event, eventAction: "added")
     }
     
     func getEvents() async throws -> [CalendarEvent] {
@@ -210,6 +211,7 @@ public class CalendarEventsTable {
         updatedInput.returnValues = AWSDynamoDBReturnValue.updatedNew
 
         try await dynamoDB.updateItem(updatedInput)
+        sendEventNotification(event: event, eventAction: "edited")
     }
     
     func deleteEvent(event: CalendarEvent) async throws {
@@ -226,12 +228,44 @@ public class CalendarEventsTable {
         deleteInput.key = ["id": id]
 
         try await dynamoDB.deleteItem(deleteInput)
+        sendEventNotification(event: event, eventAction: "removed")
     }
     
     func cleanupTable(events: [CalendarEvent]) async throws {
         for event in events {
             if event.endDate < DateService().getFortnightFromToday()[0] {
                 try await deleteEvent(event: event)
+            }
+        }
+    }
+    
+    func sendEventNotification(event: CalendarEvent, eventAction: String) {
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.requestAuthorization(options: [.alert, .badge]) { granted, error in
+            guard granted else { return }
+            
+            // Configure the content of the notification
+            let content = UNMutableNotificationContent()
+            let eventDay = event.startDate.formatted(date: .abbreviated, time: .omitted).components(separatedBy: " ")[0]
+            let eventMonth = event.startDate.formatted(date: .abbreviated, time: .omitted).components(separatedBy: " ")[1]
+            
+            content.title = "Event for \(event.who) on \(eventDay) \(eventMonth) \(eventAction)"
+            content.body = "\(event.title) starting at \(event.startDate.formatted(date: .omitted, time: .shortened))"
+            
+            // Configure the trigger
+            let timeInterval = 0.1
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(timeInterval), repeats: false)
+            
+            // Create the notification request
+            let id = "eventAddedNotification"
+            let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+            
+            // Schedule the notification
+            let notificationCenter = UNUserNotificationCenter.current()
+            notificationCenter.add(request) { error in
+                if let error = error {
+                    print("Not able to add notification: \(error.localizedDescription)")
+                }
             }
         }
     }
