@@ -255,7 +255,7 @@ public class CalendarEventsTable {
                 let eventDay = event.startDate.formatted(date: .abbreviated, time: .omitted).components(separatedBy: " ")[0]
                 let eventMonth = event.startDate.formatted(date: .abbreviated, time: .omitted).components(separatedBy: " ")[1]
                 let dict = [
-                    "default": "New message from HoppittCalendar.",
+                    "default": "New message from HoppittCalendar",
                     "APNS_SANDBOX": "{\"aps\":{\"alert\": {\"title\":\"Event for \(event.who) on \(eventDay) \(eventMonth) \(eventAction)\",\"body\":\"\(event.title) starting at \(event.startDate.formatted(date: .omitted, time: .shortened))\"}} }"
                 ]
                 
