@@ -219,7 +219,7 @@ struct AddEventSheetView: View {
                         Task {
                             do {
                                 let event: CalendarEvent = CalendarEvent(id: eventId, title: eventTitle, hasEndDate: hasEndDate, startDate: eventStartDate, endDate: eventEndDate, who: eventWho, isKeyDate: isKeyDate, isOutForDinner: isOutForDinner)
-                                try await eventsTable.deleteEvent(event: event)
+                                try await eventsTable.deleteEvent(event: event, isAutomaticDeletion: false)
                                 dismiss()
                             } catch let error {
                                 toast = Toast(style: .error, message: "Error", width: 210)

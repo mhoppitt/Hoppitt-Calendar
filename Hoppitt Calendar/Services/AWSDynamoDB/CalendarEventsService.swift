@@ -215,7 +215,7 @@ public class CalendarEventsTable {
         sendEventNotification(event: event, eventAction: "edited")
     }
     
-    func deleteEvent(event: CalendarEvent) async throws {
+    func deleteEvent(event: CalendarEvent, isAutomaticDeletion: Bool) async throws {
         let dynamoDB = AWSDynamoDB.default()
         guard let id = AWSDynamoDBAttributeValue() else {
             return print("Error setting id")
@@ -229,13 +229,16 @@ public class CalendarEventsTable {
         deleteInput.key = ["id": id]
 
         try await dynamoDB.deleteItem(deleteInput)
-        sendEventNotification(event: event, eventAction: "removed")
+        
+        if (!isAutomaticDeletion) {
+            sendEventNotification(event: event, eventAction: "removed")
+        }
     }
     
     func cleanupTable(events: [CalendarEvent]) async throws {
         for event in events {
             if event.endDate < DateService().getFortnightFromToday()[0] {
-                try await deleteEvent(event: event)
+                try await deleteEvent(event: event, isAutomaticDeletion: true)
             }
         }
     }
@@ -245,13 +248,11 @@ public class CalendarEventsTable {
             let deviceArn = SNSEndpointARN
             let deviceTokenSNS = SNSEndpointToken
             if (!deviceArn.isEmpty && !deviceTokenSNS.isEmpty) {
-                // Push notification meant for the spreebie uploader
                 let sns = AWSSNS.default()
                 let request = AWSSNSPublishInput()
                 
                 request?.messageStructure = "json"
                 
-                // The payload
                 let eventDay = event.startDate.formatted(date: .abbreviated, time: .omitted).components(separatedBy: " ")[0]
                 let eventMonth = event.startDate.formatted(date: .abbreviated, time: .omitted).components(separatedBy: " ")[1]
                 let dict = [
