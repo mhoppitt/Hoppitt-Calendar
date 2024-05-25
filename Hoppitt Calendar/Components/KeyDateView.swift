@@ -36,12 +36,14 @@ struct KeyDateView: View {
                             showingSheet.toggle()
                         }) {
                             if (event.isKeyDate && (Calendar.current.isDate(event.startDate, equalTo: date, toGranularity: .month) || Calendar.current.isDate(event.endDate, equalTo: date, toGranularity: .month) || ((event.startDate ... event.endDate).contains(date)))) {
-                                let eventStartDay = event.startDate.formatted(date: .complete, time: .omitted).components(separatedBy: ",")[0].prefix(3)
-                                let eventStartDate = event.startDate.formatted(date: .complete, time: .omitted).components(separatedBy: ",")[1].components(separatedBy: " ")[1]
-                                let eventStartMonth = event.startDate.formatted(date: .complete, time: .omitted).components(separatedBy: ",")[1].components(separatedBy: " ")[2].prefix(3)
-                                let eventEndDay = event.endDate.formatted(date: .complete, time: .omitted).components(separatedBy: ",")[0].prefix(3)
-                                let eventEndDate = event.endDate.formatted(date: .complete, time: .omitted).components(separatedBy: ",")[1].components(separatedBy: " ")[1]
-                                let eventEndMonth = event.endDate.formatted(date: .complete, time: .omitted).components(separatedBy: ",")[1].components(separatedBy: " ")[2].prefix(3)
+                                let startDate = event.startDate.formatted(date: .complete, time: .omitted).components(separatedBy: " ")
+                                let eventStartDay = startDate[0].prefix(3)
+                                let eventStartDate = startDate[1]
+                                let eventStartMonth = startDate[2].prefix(3)
+                                let endDate = event.endDate.formatted(date: .complete, time: .omitted).components(separatedBy: " ")
+                                let eventEndDay = endDate[0].prefix(3)
+                                let eventEndDate = endDate[1]
+                                let eventEndMonth = endDate[2].prefix(3)
                                 VStack(spacing: 0) {
                                     HStack() {
                                         // One date
