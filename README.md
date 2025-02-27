@@ -1,4 +1,5 @@
 # Hoppitt Calendar
+<img src="docs/hoppitt-calendar-keydates.png" alt="Walkthrough Video" width="75"/>
 
 Hoppitt Calendar simplifies the scheduling challenges faced by shared households by providing a centralised platform for all members to easily plan and track their activities. With custom attributes tailored to the unique needs of the household, events are seamlessly synced in real-time, giving everyone an up-to-date view of each other's week. This app fosters better coordination and smoother day-to-day living for shared homes.
 
@@ -26,13 +27,13 @@ Hoppitt Calendar simplifies the scheduling challenges faced by shared households
 
 
 ## Screenshots
-![Home Page](docs/hoppitt-calendar-home.png)
-![Add Event](docs/hoppitt-calendar-addevent.png)
-![Key Dates](docs/hoppitt-calendar-keydates.png)
+<img src="docs/hoppitt-calendar-home.png" alt="Home Page Image" width="200"/>
+<img src="docs/hoppitt-calendar-addevent.png" alt="Add Event Image" width="200"/>
+<img src="docs/hoppitt-calendar-keydates.png" alt="Key Dates Image" width="200"/>
 
 
 ## Demo Video
-![Walkthrough](docs/hoppitt-calendar-walkthrough.mp4)
+<img src="docs/hoppitt-calendar-keydates.png" alt="Walkthrough Video" width="200"/>
 
 
 ## Installation
